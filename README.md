@@ -1,2 +1,4 @@
 # bacterial-phylo
- new phylogenies of bacteria
+
+This repo details some attempts to improve GTDB's trees.
+

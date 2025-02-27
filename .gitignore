@@ -1,0 +1,4 @@
+
+# ignore ALL the raw data files, except the download script
+raw_data/*
+!raw_data/download_data.sh
