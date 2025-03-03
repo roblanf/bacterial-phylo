@@ -27,3 +27,18 @@ wget https://data.gtdb.ecogenomic.org/releases/release202/202.0/genomic_files_re
 wget https://data.gtdb.ecogenomic.org/releases/release207/207.0/genomic_files_reps/bac120_msa_reps_r207.tar.gz
 wget https://data.gtdb.ecogenomic.org/releases/release214/214.1/genomic_files_reps/bac120_msa_reps_r214.tar.gz
 wget https://data.gtdb.ecogenomic.org/releases/release220/220.0/genomic_files_reps/bac120_msa_reps_r220.faa.gz
+
+
+# now unzip the lot
+gunzip *.gz
+
+# and untar the three remaining trees
+tar -xvf bac120_r202.tree.tar
+tar -xvf bac120_r207.tree.tar
+tar -xvf bac120_r214.tree.tar
+
+# I don't like the formatting of the tsv files, so let's fix that next
+awk 'BEGIN { FS=OFS="\t" } { gsub(";", "\t", $2) } 1' bac120_taxonomy_r202.tsv > bac120_taxonomy_r202_clean.tsv
+awk 'BEGIN { FS=OFS="\t" } { gsub(";", "\t", $2) } 1' bac120_taxonomy_r207.tsv > bac120_taxonomy_r207_clean.tsv
+awk 'BEGIN { FS=OFS="\t" } { gsub(";", "\t", $2) } 1' bac120_taxonomy_r214.tsv > bac120_taxonomy_r214_clean.tsv
+awk 'BEGIN { FS=OFS="\t" } { gsub(";", "\t", $2) } 1' bac120_taxonomy_r220.tsv > bac120_taxonomy_r220_clean.tsv
