@@ -29,6 +29,11 @@ wget https://data.gtdb.ecogenomic.org/releases/release214/214.1/genomic_files_re
 wget https://data.gtdb.ecogenomic.org/releases/release220/220.0/genomic_files_reps/bac120_msa_reps_r220.faa.gz
 
 
+# small alignments first
+tar -xvzf bac120_msa_reps_r202.tar.gz 
+tar -xvzf bac120_msa_reps_r207.tar.gz 
+tar -xvzf bac120_msa_reps_r214.tar.gz 
+
 # now unzip the lot
 gunzip *.gz
 
