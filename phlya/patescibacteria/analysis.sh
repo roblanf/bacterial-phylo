@@ -51,8 +51,6 @@ iqtree -s alignment.faa -fs qpfam_c60_g_sf.sitefreq -t basic.treefile -m Q.pfam+
 
 
 
-#### C20 on the full dataset: bac2
-
 
 
 #### Estimate PMSF on a 100 taxon dataset: bac3
@@ -67,7 +65,7 @@ iqtree -s alignment.faa -fs qpfam_c60_g_sf_100.sitefreq -t basic.treefile -m Q.p
 
 
 
-#### C20 model no PMSF
+#### C20 on the full dataset: bac2
 
 iqtree -s alignment.faa -t subtree_topology_clean.nwk -m C20 -nt 60 -safe -pre C20fixed
 
