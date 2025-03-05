@@ -23,16 +23,47 @@ nw_topology -I subtree.nwk > subtree_topology.nwk # discard all unnecessary labe
 sed -E 's/^\((.*)\);$/\1;/' subtree_topology.nwk > subtree_topology_clean.nwk
 
 
+# now we get a subtree and sub-alignment of 100 random sequences
+# these are alignment_100.faa, and subtree_100_topology_clean.nwk
+shuf -n 100 taxa.txt > taxa_100.txt
+faSomeRecords $alignment taxa_100.txt alignment_100.faa
+sort taxa_100.txt > taxa_100_sorted.txt
+comm -23 all_tips_sorted.txt taxa_100_sorted.txt > tips_to_prune_100.txt # gets the tips not in my list
+nw_prune $tree $(cat tips_to_prune_100.txt) > subtree_100.nwk
+nw_topology -I subtree_100.nwk > subtree_100_topology.nwk # discard all unnecessary labels and branch lengths
+sed -E 's/^\((.*)\);$/\1;/' subtree_100_topology.nwk > subtree_100_topology_clean.nwk
+
+
 
 # IQ-TREE analyses
 
 
-#### Estimate PMSF on the full dataset
-# 1. Basic analysis
+#### Estimate PMSF on the full dataset: bacteria
+# 1. Basic analysis to get the tree
 iqtree -s alignment.faa -t subtree_topology_clean.nwk -m Q.pfam+G -nt 60 -safe -pre basic
+# get the site frequencies
+iqtree -s alignment.faa -ft basic.treefile -m Q.pfam+C60+G -nt 60 -safe -pre qpfam_c60_g_sf -n 0
+# apply them with +G
+iqtree -s alignment.faa -fs qpfam_c60_g_sf.sitefreq -t basic.treefile -m Q.pfam+C60+G -nt 60 -safe -pre qpfam_c60_g_tree_noboot
+
+# apply them with +G and UFBOOT
+iqtree -s alignment.faa -fs qpfam_c60_g_sf.sitefreq -t basic.treefile -m Q.pfam+C60+G -nt 60 -safe -pre qpfam_c60_g_tree_ufboot -bb 1000
 
 
-#### Estimate PMSF on a 100 taxon dataset
+
+#### C20 on the full dataset: bac2
+
+
+
+#### Estimate PMSF on a 100 taxon dataset: bac3
+# 1. get the tree with C60
+iqtree -s alignment_100.faa -t subtree_100_topology_clean.nwk -m Q.pfam+C60+R8 -nt 60 -safe -pre 100_tree
+# turns out that the R8 distributino looks very gamma-like, so I will switch to gamma
+# get the site frequencies
+iqtree -s alignment_100.faa -ft 100_tree.treefile -m Q.pfam+C60+G -nt 60 -safe -pre qpfam_c60_g_sf_100 -n 0
+# apply them to the FULL alignment (using the same starting tree as before)
+iqtree -s alignment.faa -fs qpfam_c60_g_sf_100.sitefreq -t basic.treefile -m Q.pfam+C60+G -nt 60 -safe -pre qpfam_c60_g_tree_noboot_100
+
 
 
 
@@ -41,14 +72,20 @@ iqtree -s alignment.faa -t subtree_topology_clean.nwk -m Q.pfam+G -nt 60 -safe -
 iqtree -s alignment.faa -t subtree_topology_clean.nwk -m C20 -nt 60 -safe -pre C20fixed
 
 
-# C20 estimate weights
-iqtree -s alignment.faa -t subtree_topology_clean.nwk -m Q.pfam+C20+R8 -mwopt -nt 120 -safe -pre C20estimated
 
-# CAT-PMSF
-# first optimise the branch length and C20 weights on a fixed starting tree
-iqtree -s alignment.faa -te subtree_topology_clean.nwk -m Q.pfam+C20+R8 -mwopt -nt 60 -safe -pre C20_R8_fixed
 
-# optionally we could infer the GTR matrix here, but that will likely take too long...
 
-# then fix the model and get the PMSF site profiles
-iqtree -s alignment.faa -ft C20_R8_fixed.tree -m Q.pfam+C20{}+R8{} -mwopt -nt 60 -safe -pre CATPMSF_C20
+#### Estimate a GTR20+F20 PMSF on the 100 taxon dataset: bac4
+# 1. Estimate GTR20+F20
+iqtree -s alignment_100.faa -te subtree_100_topology_clean.nwk -m GTR20+F20+R8 -nt 60 -safe -pre 100_GTR20F20
+
+# 2. get the exchangeability matrix
+iqtree2 -s alignment_100.faa -m GTR20+C60+R8 --link-exchange -te 100_tree.tree -me 0.99 -safe --init-exchange q.pfam -pre 100_pmix
+
+
+
+
+#### C20 model no PMSF: bac2
+iqtree -s alignment.faa -t subtree_topology_clean.nwk -m C20 -nt 60 -safe -pre C20fixed
+
+

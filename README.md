@@ -25,5 +25,9 @@ To get the raw data and uncompress it:
 ```{bash}
 cd raw_data
 bash download_data.sh
-
 ```
+
+
+# The analysis
+
+Each phylum has its own folder, e.g. `/patescibacteria`, with a readme. 
