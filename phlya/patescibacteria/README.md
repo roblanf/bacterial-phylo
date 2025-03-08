@@ -23,7 +23,42 @@ AICs are approx because they don't account for parameters estimated in earlier s
 
 How close are the trees after all this work??
 
+`basic.treefile` is just Q.pfam+G
+
 ![MDS](MDS.png)
+
+
+This shows that the (poorly named) GTR+C60 trees with mwopt trees are very similar (rf dist 270)
+
+This MDS is done from RF distances as follows:
+
+```
+cat fasttree.treefile \
+	C20fixed.treefile \
+	basic.treefile \
+	qpfam_c60_g_tree_ufboot.treefile \
+    qpfam_c60_g_tree_ufboot_100.treefile \
+    GTR_c60_g_mwopt_tree_ufboot_100.treefile \
+    GTR_c60_g_mwopt_tree_ufboot.treefile \
+     > all_trees.tre
+
+iqtree  -rf_all all_trees.tre -pre rf_distance_matrix
+
+```
+
+The resulting matrix is:
+
+```
+0 528 416 490 540 524 498
+528 0 462 430 424 366 380
+416 462 0 314 356 344 314
+490 430 314 0 318 318 328
+540 424 356 318 0 316 364
+524 366 344 318 316 0 270
+498 380 314 328 364 270 0
+```
+
+
 
 ## The analyses
 
