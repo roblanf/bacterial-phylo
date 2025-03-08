@@ -4,21 +4,26 @@ Details of the analysis are in the analysis folder. Here's a summary
 
 ## Results
 
+
+### Model Fit
+
 AICs are approx because they don't account for parameters estimated in earlier steps. These can be ~300 parameters (rate matrix, plus ~60 profile weights). 
 
-| ID  | LnL   | AIC(approx) | Tree Length | % internal | Total Time (tree) | Total Time (UFBoot) | Summary  |
-|-----|-------|-----------|----------|-------|-----|-----|-----|
-| 1 | -5457790 | 10921981 | 487 | 27.5678% | 24h:1m:14s | NA |  `-m C20`, that's it |
-| 2 | -5327202 | 10660842 | 713 | 27.5436% | 9h:21m:28s | 11h:30m:51s |  PMSF with Q.pfam+C60+G on the full dataset |
-| 3 | -5381055 | 10768548 | 668 | 28.0951% | 7h:54m:1s | 11h:48m:28s | PMSF as for 2 but site freqs all done from 100 random taxa |
-| 4 | -5306068 | 10618575 | 525 | 27.8594% | 11h:13m:38s |  |  |
-| 5 |  |  |  |  |  |  |  |
-| 3 |  |  |  |  |  |  |  |
-| 3 |  |  |  |  |  |  |  |
-| 3 |  |  |  |  |  |  |  |
-| 3 |  |  |  |  |  |  |  |
-| 3 |  |  |  |  |  |  |  |
+| ID  | LnL   | AIC(approx) | Tree Length | % internal | BS: med;mean;%>90;%>95;%>99 |  Total Time (tree) | Total Time (UFBoot) | Summary  |
+|-----|-------|-----------|----------|-------|-----|-----|-|----|
+| 1 | -5457790 | 10921981 | 487 | 27.5678% | NA | 24h:1m:14s | NA |  `-m C20`, that's it |
+| 2 | -5327202 | 10660842 | 713 | 27.5436% | 100; 96; 88.5%; 83.7%; 72.7% | 9h:21m:28s | 11h:30m:51s |  PMSF with Q.pfam+C60+G on the full dataset |
+| 3 | -5381055 | 10768548 | 668 | 28.0951% | 100; 95; 87.5%; 82.4%; 73.0% | 7h:54m:1s | 11h:48m:28s | PMSF as for 2 but site freqs all done from 100 random taxa |
+| 4 | -5306068 | 10618575 | 525 | 27.8594% | 100; 95; 87.8%; 84.2%; 73.9% | 11h:13m:38s | 9h:42m:18s | GTRPmix PMSF with parameters from a 100 taxon subset, using `-mwopt` and `GTRPMIX` |
+| 5 | -5273916 | 10554270 | 549 | 27.6307% | 100; 96; 88.7%; 84.7%; 75.7% | 9h:53m:56s | 7h:28m:48s | GTRPmix PMSF with parameters from a 100 taxon subset, using `-mwopt` and `GTRPMIX`, but site freqs from the whole dataset |
+| 6 |  |  |  |  |  |  |  | |
 
+
+#### Tree distances
+
+How close are the trees after all this work??
+
+![MDS](MDS.png)
 
 ## The analyses
 
@@ -64,9 +69,11 @@ Observations: it's the tree search which takes all the time. And C60 PMSF is alm
 
 
 
-### 3. PMSF with parameters from a 100 taxon subset
+### 3. Q.pfam+C60+G PMSF with parameters from a 100 taxon subset
 
 The point here is a fairly direct comparison with the above. I estimate the site frequencies themselves on a subset of 100 taxa, then apply them to the full dataset. 
+
+> NB: 100 was my plan, but because I sampled taxa from the full list, I actually ended up with 41 taxa here!! 
 
 ```{bash}
 #### Estimate PMSF on a 100 taxon dataset: bac3
@@ -91,9 +98,11 @@ Note that the timing for step 1 is long, and off, because I tried an R8 model.
 Observations: not sure why this PMSF analysis took so much longer. Worse model fit? As expected, the lnL is lower. But it's not a LOT lower. So that's encouraging! This suggests we could try doing site profiles from super fancy models on a subset. Let's see how that goes.
 
 
-### 4. PMSF with parameters from a 100 taxon subset, using `-mwopt` and `GTRPMIX`
+### 4. GTRPmix PMSF with parameters from a 100 taxon subset, using `-mwopt` and `GTRPMIX`
 
 The idea is that maybe a super fancy model on a small subset gives better site frequencies than a simpler model on the full data. Let's see.
+
+> NB: 100 was my plan, but because I sampled taxa from the full list, I actually ended up with 41 taxa here!! 
 
 
 ```{bash}
@@ -115,7 +124,66 @@ Timing:
 2. 2h:53m:12s
 3. 0h:0m:2s
 4. 5h:37m:26s
-5. 
+5. 4h:6m:6s
 
 Observations: best likelihood yet! So this works. Also, the tree lenght is a lot shorter, so I'm not sure what to think of that. Less LBA perhaps? 
+
+
+### 5. GTRPmix PMSF with parameters from a 100 taxon subset, using `-mwopt` and `GTRPMIX`, but site freqs from the whole dataset
+
+The point here is that the site frequency calculation is super fast, so it's dumb to get this from the 100 taxon subset.
+
+> NB: 100 was my plan, but because I sampled taxa from the full list, I actually ended up with 41 taxa here!! 
+
+
+```{bash}
+#### GTRpmix on 100 taxon dataset, site freqs on the whole thing? bacteria
+# 1. Get the tree with C60 - take it from 100_tree above
+# 2. Estimate GTR+C60 with mwopt: as above
+# 3. get the site frequencies
+iqtree -s alignment.faa -ft basic.treefile -m GTRPMIX+C60+G4 -mdef GTR_c60_g_mwopt.GTRPMIX.nex -nt 60 -safe -pre GTR_c60_g_mwopt_sf -n 0
+
+# 4. apply them to the FULL alignment (using the same starting tree as before), then try ufboot
+iqtree -s alignment.faa -fs GTR_c60_g_mwopt_sf.sitefreq -t basic.treefile -m GTRPMIX+C60+G4 -mdef GTR_c60_g_mwopt.GTRPMIX.nex -nt 60 -safe -pre GTR_c60_g_mwopt_tree_noboot
+iqtree -s alignment.faa -fs GTR_c60_g_mwopt_sf.sitefreq -t basic.treefile -m GTRPMIX+C60+G4 -mdef GTR_c60_g_mwopt.GTRPMIX.nex -nt 60 -safe -pre GTR_c60_g_mwopt_tree_ufboot -bb 1000
+
+```
+
+1. 2h:42m:58s
+2. 2h:53m:12s
+3. 0h:1m:53s
+4. 4h:15m:53s
+5. 1h:50m:45s
+
+Observations. Best yet. And super odd that the ufboot goes so much quicker than the not-ufboot. Maybe 60 threads is too many on the single analysis. Honestly unsure.
+
+### 6. GTRPmix PMSF with parameters from a 250 taxon subset, using `-mwopt` and `GTRPMIX`, site freqs from the whole dataset
+
+The point here is that a bigger subset should be better for estimating the model
+
+> NB: 250 was my plan, but because I sampled taxa from the full list, I actually ended up with 128 taxa here!! 
+
+
+```{bash}
+#### GTRpmix on 250 taxon dataset, site freqs on the whole thing: bacteria
+# 1. Get the tree with C60
+iqtree -s alignment_250.faa -t subtree_250_topology_clean.nwk -m Q.pfam+C60+G -nt 60 -safe -pre 250_tree
+
+# 2. Estimate GTR+C60 with mwopt on a 250 subset
+iqtree -s alignment_250.faa -m GTR20+C60+G4 --link-exchange --init-exchange q.pfam -te 250_tree.treefile -me 0.99 -nt 60 -safe -mwopt -pre GTR_c60_g_mwopt_250
+
+# 3. get the site frequencies
+iqtree -s alignment.faa -ft basic.treefile -m GTRPMIX+C60+G4 -mdef GTR_c60_g_mwopt_250.GTRPMIX.nex -nt 60 -safe -pre GTR_c60_g_mwopt_250_sf -n 0
+
+# 4. apply them to the FULL alignment (using the same starting tree as before), then try ufboot
+iqtree -s alignment.faa -fs GTR_c60_g_mwopt_250_sf.sitefreq -t basic.treefile -m GTRPMIX+C60+G4 -mdef GTR_c60_g_mwopt_250.GTRPMIX.nex -nt 60 -safe -pre GTR_c60_g_mwopt_250_tree_noboot
+iqtree -s alignment.faa -fs GTR_c60_g_mwopt_250_sf.sitefreq -t basic.treefile -m GTRPMIX+C60+G4 -mdef GTR_c60_g_mwopt_250.GTRPMIX.nex -nt 60 -safe -pre GTR_c60_g_mwopt_250_tree_ufboot -bb 1000
+
+```
+
+1. 
+
+
+
+
 

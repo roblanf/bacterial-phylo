@@ -25,6 +25,9 @@ sed -E 's/^\((.*)\);$/\1;/' subtree_topology.nwk > subtree_topology_clean.nwk
 
 # now we get a subtree and sub-alignment of 100 random sequences
 # these are alignment_100.faa, and subtree_100_topology_clean.nwk
+# TODO: this sampling is wrong! I should start from the set of taxa in the tree only.
+# This resulted in 41 taxa, not 100!!
+
 shuf -n 100 taxa.txt > taxa_100.txt
 faSomeRecords $alignment taxa_100.txt alignment_100.faa
 sort taxa_100.txt > taxa_100_sorted.txt
@@ -32,6 +35,20 @@ comm -23 all_tips_sorted.txt taxa_100_sorted.txt > tips_to_prune_100.txt # gets 
 nw_prune $tree $(cat tips_to_prune_100.txt) > subtree_100.nwk
 nw_topology -I subtree_100.nwk > subtree_100_topology.nwk # discard all unnecessary labels and branch lengths
 sed -E 's/^\((.*)\);$/\1;/' subtree_100_topology.nwk > subtree_100_topology_clean.nwk
+
+
+# now we get a subtree and sub-alignment of 250 random sequences
+# these are alignment_250.faa, and subtree_250_topology_clean.nwk
+# TODO: this sampling is wrong! I should start from the set of taxa in the tree only.
+# This resulted in 128 taxa, not 250!!
+
+shuf -n 250 taxa.txt > taxa_250.txt
+faSomeRecords $alignment taxa_250.txt alignment_250.faa
+sort taxa_250.txt > taxa_250_sorted.txt
+comm -23 all_tips_sorted.txt taxa_250_sorted.txt > tips_to_prune_250.txt # gets the tips not in my list
+nw_prune $tree $(cat tips_to_prune_250.txt) > subtree_250.nwk
+nw_topology -I subtree_250.nwk > subtree_250_topology.nwk # discard all unnecessary labels and branch lengths
+sed -E 's/^\((.*)\);$/\1;/' subtree_250_topology.nwk > subtree_250_topology_clean.nwk
 
 
 
@@ -71,6 +88,7 @@ iqtree -s alignment_100.faa -m GTR20+C60+G4 --link-exchange --init-exchange q.pf
 iqtree -s alignment_100.faa -ft 100_tree.treefile -m GTRPMIX+C60+G4 -mdef GTR_c60_g_mwopt.GTRPMIX.nex -nt 60 -safe -pre GTR_c60_g_mwopt_sf_100 -n 0
 # 4. apply them to the FULL alignment (using the same starting tree as before)
 iqtree -s alignment.faa -fs GTR_c60_g_mwopt_sf_100.sitefreq -t basic.treefile -m GTRPMIX+C60+G4 -mdef GTR_c60_g_mwopt.GTRPMIX.nex -nt 60 -safe -pre GTR_c60_g_mwopt_tree_noboot_100
+iqtree -s alignment.faa -fs GTR_c60_g_mwopt_sf_100.sitefreq -t basic.treefile -m GTRPMIX+C60+G4 -mdef GTR_c60_g_mwopt.GTRPMIX.nex -nt 60 -safe -pre GTR_c60_g_mwopt_tree_ufboot_100 -bb 1000
 
 
 
@@ -81,35 +99,67 @@ iqtree -s alignment.faa -fs GTR_c60_g_mwopt_sf_100.sitefreq -t basic.treefile -m
 iqtree -s alignment.faa -ft basic.treefile -m GTRPMIX+C60+G4 -mdef GTR_c60_g_mwopt.GTRPMIX.nex -nt 60 -safe -pre GTR_c60_g_mwopt_sf -n 0
 
 # 4. apply them to the FULL alignment (using the same starting tree as before)
-iqtree -s alignment.faa -fs GTR_c60_g_mwopt_sf.sitefreq -t basic.treefile -m GTRPMIX+C60+G4 -mdef GTR_c60_g_mwopt.GTRPMIX.nex -nt 60 -safe -pre GTR_c60_g_mwopt_tree_noboot_100
+iqtree -s alignment.faa -fs GTR_c60_g_mwopt_sf.sitefreq -t basic.treefile -m GTRPMIX+C60+G4 -mdef GTR_c60_g_mwopt.GTRPMIX.nex -nt 60 -safe -pre GTR_c60_g_mwopt_tree_noboot
+iqtree -s alignment.faa -fs GTR_c60_g_mwopt_sf.sitefreq -t basic.treefile -m GTRPMIX+C60+G4 -mdef GTR_c60_g_mwopt.GTRPMIX.nex -nt 60 -safe -pre GTR_c60_g_mwopt_tree_ufboot -bb 1000
+
+
+
+#### GTRpmix on 250 taxon dataset, site freqs on the whole thing: bacteria
+# 1. Get the tree with C60
+iqtree -s alignment_250.faa -t subtree_250_topology_clean.nwk -m Q.pfam+C60+G -nt 60 -safe -pre 250_tree
+
+# 2. Estimate GTR+C60 with mwopt on a 250 subset
+iqtree -s alignment_250.faa -m GTR20+C60+G4 --link-exchange --init-exchange q.pfam -te 250_tree.treefile -me 0.99 -nt 60 -safe -mwopt -pre GTR_c60_g_mwopt_250
+
+# 3. get the site frequencies
+iqtree -s alignment.faa -ft basic.treefile -m GTRPMIX+C60+G4 -mdef GTR_c60_g_mwopt_250.GTRPMIX.nex -nt 60 -safe -pre GTR_c60_g_mwopt_250_sf -n 0
+
+# 4. apply them to the FULL alignment (using the same starting tree as before), then try ufboot
+iqtree -s alignment.faa -fs GTR_c60_g_mwopt_250_sf.sitefreq -t basic.treefile -m GTRPMIX+C60+G4 -mdef GTR_c60_g_mwopt_250.GTRPMIX.nex -nt 60 -safe -pre GTR_c60_g_mwopt_250_tree_noboot
+iqtree -s alignment.faa -fs GTR_c60_g_mwopt_250_sf.sitefreq -t basic.treefile -m GTRPMIX+C60+G4 -mdef GTR_c60_g_mwopt_250.GTRPMIX.nex -nt 60 -safe -pre GTR_c60_g_mwopt_250_tree_ufboot -bb 1000
 
 
 
 
+#### Estimate a GTR20+F20 PMSF on the 100 (41!) taxon dataset: bac3
+# 1. Get the tree with C60 - take it from 100_tree above
+# 2. Estimate GTR+F60 with mwopt
+iqtree -s alignment_100.faa -m GTR20+F60+G4 --link-exchange --init-exchange q.pfam -te 100_tree.treefile -me 0.99 -nt 60 -safe -mwopt -pre GTR_F60_g_mwopt_100
 
 
+# Get the bootstrap values
+
+for file in qpfam_c60_g_tree_ufboot.treefile qpfam_c60_g_tree_ufboot_100.treefile \
+            GTR_c60_g_mwopt_tree_ufboot_100.treefile GTR_c60_g_mwopt_tree_ufboot.treefile \
+            GTR_c60_g_mwopt_250_tree_ufboot.treefile; do
+  echo "Processing $file:"
+  grep -oP '\)\K\d+(?=:)' "$file" | python3 -c "import sys, numpy as np; \
+data = np.array([float(x) for x in sys.stdin.read().split()]); \
+median = np.median(data); mean = np.mean(data); \
+prop90 = np.mean(data > 90)*100; prop95 = np.mean(data > 95)*100; prop99 = np.mean(data > 99)*100; \
+print(f'{median:.0f}; {mean:.0f}; {prop90:.1f}%; {prop95:.1f}%; {prop99:.1f}%')"
+  echo
+done
 
 
+# Get the tree distances
+
+# something odd in IQ-TREE about the RF distances, so I clean up the initial tree first.
+iqtree -s alignment.faa -te subtree_topology_clean.nwk -m Q.pfam -nt 60 -safe -pre fasttree
 
 
+cat fasttree.treefile \
+	C20fixed.treefile \
+	basic.treefile \
+	qpfam_c60_g_tree_ufboot.treefile \
+    qpfam_c60_g_tree_ufboot_100.treefile \
+    GTR_c60_g_mwopt_tree_ufboot_100.treefile \
+    GTR_c60_g_mwopt_tree_ufboot.treefile \
+     > all_trees.tre
 
+iqtree  -rf_all all_trees.tre -pre rf_distance_matrix
 
+# process the matrix
+tail -n +2 rf_distance_matrix.rfdist | awk '{$1=""; sub(/^ /, ""); print}' > rf_distance_matrix_numeric.txt
 
-
-
-
-
-#### Estimate a GTR20+F20 PMSF on the 100 taxon dataset: bac4
-# 1. Estimate GTR20+F20
-iqtree -s alignment_100.faa -te subtree_100_topology_clean.nwk -m GTR20+F20+R8 -nt 60 -safe -pre 100_GTR20F20
-
-# 2. get the exchangeability matrix
-iqtree2 -s alignment_100.faa -m GTR20+C60+R8 --link-exchange -te 100_tree.tree -me 0.99 -safe --init-exchange q.pfam -pre 100_pmix
-
-
-
-
-#### C20 model no PMSF: bac2
-iqtree -s alignment.faa -t subtree_topology_clean.nwk -m C20 -nt 60 -safe -pre C20fixed
-
-
+# make a PCA plot using hte R script in the scripts folder
