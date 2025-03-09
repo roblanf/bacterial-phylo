@@ -9,15 +9,17 @@ Details of the analysis are in the analysis folder. Here's a summary
 
 AICs are approx because they don't account for parameters estimated in earlier steps. These can be ~300 parameters (rate matrix, plus ~60 profile weights). 
 
-| ID  | LnL   | AIC(approx) | Tree Length | % internal | BS: med;mean;%>90;%>95;%>99 |  Total Time (tree) | Total Time (UFBoot) | Summary  |
-|-----|-------|-----------|----------|-------|-----|-----|-|----|
-| 1 | -5457790 | 10921981 | 487 | 27.5678% | NA | 24h:1m:14s | NA |  `-m C20`, that's it |
-| 2 | -5327202 | 10660842 | 713 | 27.5436% | 100; 96; 88.5%; 83.7%; 72.7% | 9h:21m:28s | 11h:30m:51s |  PMSF with Q.pfam+C60+G on the full dataset |
-| 3 | -5381055 | 10768548 | 668 | 28.0951% | 100; 95; 87.5%; 82.4%; 73.0% | 7h:54m:1s | 11h:48m:28s | PMSF as for 2 but site freqs all done from 100 random taxa |
-| 4 | -5306068 | 10618575 | 525 | 27.8594% | 100; 95; 87.8%; 84.2%; 73.9% | 11h:13m:38s | 9h:42m:18s | GTRPmix PMSF with parameters from a 100 taxon subset, using `-mwopt` and `GTRPMIX` |
-| 5 | -5273916 | 10554270 | 549 | 27.6307% | 100; 96; 88.7%; 84.7%; 75.7% | 9h:53m:56s | 7h:28m:48s | GTRPmix PMSF with parameters from a 100 taxon subset, using `-mwopt` and `GTRPMIX`, but site freqs from the whole dataset |
-| 6 |  |  |  |  |  |  |  | |
+| ID  | model_taxa | sitefreq_taxa | LnL   | AIC(approx) | Tree Length | % internal | BS: med;mean;%>90;%>95;%>99 |  Total Time (tree) | Total Time (UFBoot) | Summary  |
+|--|-|---|-------|-----------|----------|-------|-----|-----|-|----|
+| 1 | 1601 | NA | -5457790 | 10921981 | 487 | 27.5678% | NA | 24h:1m:14s | NA |  `-m C20`, that's it |
+| 2 | 1601 | 1601 | -5327202 | 10660842 | 713 | 27.5436% | 100; 96; 88.5%; 83.7%; 72.7% | 9h:21m:28s | 11h:30m:51s |  PMSF with Q.pfam+C60+G on the full dataset |
+| 3 | 41 | 41 | -5381055 | 10768548 | 668 | 28.0951% | 100; 95; 87.5%; 82.4%; 73.0% | 7h:54m:1s | 11h:48m:28s | PMSF as for 2 but site freqs all done from 100 random taxa |
+| 4 | 41 | 41 |-5306068 | 10618575 | 525 | 27.8594% | 100; 95; 87.8%; 84.2%; 73.9% | 11h:13m:38s | 9h:42m:18s | GTRPmix PMSF with parameters from a 100 taxon subset, using `-mwopt` and `GTRPMIX` |
+| 5 | 41 | 1601 |-5273916 | 10554270 | 549 | 27.6307% | 100; 96; 88.7%; 84.7%; 75.7% | 9h:53m:56s | 7h:28m:48s | GTRPmix PMSF with parameters from a 100 taxon subset, using `-mwopt` and `GTRPMIX`, but site freqs from the whole dataset |
+| 6 | 128 | 1601 | -5268396 | 10543231 | 542 | 27.5480 |  |  |  | |
 
+
+The basic observation here is that we have a good with analysis 6. And adding a lot more species probably won't change the model much. 
 
 #### Tree distances
 
@@ -49,16 +51,18 @@ iqtree  -rf_all all_trees.tre -pre rf_distance_matrix
 The resulting matrix is:
 
 ```
-0 528 416 490 540 524 498
-528 0 462 430 424 366 380
-416 462 0 314 356 344 314
-490 430 314 0 318 318 328
-540 424 356 318 0 316 364
-524 366 344 318 316 0 270
-498 380 314 328 364 270 0
+8 8
+Tree0       0 528 416 490 540 524 498 490
+Tree1       528 0 462 430 424 366 380 364
+Tree2       416 462 0 314 356 344 314 320
+Tree3       490 430 314 0 318 318 328 296
+Tree4       540 424 356 318 0 316 364 338
+Tree5       524 366 344 318 316 0 270 282
+Tree6       498 380 314 328 364 270 0 248
+Tree7       490 364 320 296 338 282 248 0
 ```
 
-
+I.e. trees 6 and 7 are the closest. As expected. They are done similarly. 
 
 ## The analyses
 
@@ -203,10 +207,8 @@ The point here is that a bigger subset should be better for estimating the model
 #### GTRpmix on 250 taxon dataset, site freqs on the whole thing: bacteria
 # 1. Get the tree with C60
 iqtree -s alignment_250.faa -t subtree_250_topology_clean.nwk -m Q.pfam+C60+G -nt 60 -safe -pre 250_tree
-
 # 2. Estimate GTR+C60 with mwopt on a 250 subset
 iqtree -s alignment_250.faa -m GTR20+C60+G4 --link-exchange --init-exchange q.pfam -te 250_tree.treefile -me 0.99 -nt 60 -safe -mwopt -pre GTR_c60_g_mwopt_250
-
 # 3. get the site frequencies
 iqtree -s alignment.faa -ft basic.treefile -m GTRPMIX+C60+G4 -mdef GTR_c60_g_mwopt_250.GTRPMIX.nex -nt 60 -safe -pre GTR_c60_g_mwopt_250_sf -n 0
 
@@ -216,8 +218,13 @@ iqtree -s alignment.faa -fs GTR_c60_g_mwopt_250_sf.sitefreq -t basic.treefile -m
 
 ```
 
-1. 
+1. 2h:53m:27s
+2. 13h:43m:17s
+3. 0h:1m:21s
+4. 3h:36m:21s
+5. 
 
+Observations - I think the wall time estimate from IQ-TREE is WAY off. I was watching it and step 3 took way longer than 1 minute... I should check this at some point.
 
 
 

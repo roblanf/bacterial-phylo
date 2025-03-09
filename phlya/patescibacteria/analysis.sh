@@ -107,10 +107,8 @@ iqtree -s alignment.faa -fs GTR_c60_g_mwopt_sf.sitefreq -t basic.treefile -m GTR
 #### GTRpmix on 250 taxon dataset, site freqs on the whole thing: bacteria
 # 1. Get the tree with C60
 iqtree -s alignment_250.faa -t subtree_250_topology_clean.nwk -m Q.pfam+C60+G -nt 60 -safe -pre 250_tree
-
 # 2. Estimate GTR+C60 with mwopt on a 250 subset
 iqtree -s alignment_250.faa -m GTR20+C60+G4 --link-exchange --init-exchange q.pfam -te 250_tree.treefile -me 0.99 -nt 60 -safe -mwopt -pre GTR_c60_g_mwopt_250
-
 # 3. get the site frequencies
 iqtree -s alignment.faa -ft basic.treefile -m GTRPMIX+C60+G4 -mdef GTR_c60_g_mwopt_250.GTRPMIX.nex -nt 60 -safe -pre GTR_c60_g_mwopt_250_sf -n 0
 
@@ -121,10 +119,18 @@ iqtree -s alignment.faa -fs GTR_c60_g_mwopt_250_sf.sitefreq -t basic.treefile -m
 
 
 
-#### Estimate a GTR20+F20 PMSF on the 100 (41!) taxon dataset: bac3
+#### Estimate a GTR20+F60 PMSF on the 100 (41!) taxon dataset: bac2
 # 1. Get the tree with C60 - take it from 100_tree above
-# 2. Estimate GTR+F60 with mwopt
-iqtree -s alignment_100.faa -m GTR20+F60+G4 --link-exchange --init-exchange q.pfam -te 100_tree.treefile -me 0.99 -nt 60 -safe -mwopt -pre GTR_F60_g_mwopt_100
+# 2. Estimate GTR+F60 with mwopt, using new version of iqtree
+../../iqtree-2.4.1-Linux-intel/bin/iqtree2 -s alignment_100.faa -m GTR20+F60+G4 --link-exchange --init-exchange q.pfam -te 100_tree.treefile -me 0.99 -nt 60 -safe -mwopt -pre GTR_F60_g_mwopt_100
+
+
+
+#### Estimate a GTR20+F60 PMSF on the 100 (41!) taxon dataset: bac2
+# 1. Get the tree with C60 - take it from 100_tree above
+# 2. Estimate GTR+F60 with mwopt, using new version of iqtree
+../../iqtree-2.4.1-Linux-intel/bin/iqtree2 -s alignment_100.faa -m GTR20+F20+G4 --link-exchange --init-exchange q.pfam -te 100_tree.treefile -me 0.99 -nt 60 -safe -mwopt -pre GTR_F20_g_mwopt_100
+
 
 
 # Get the bootstrap values
@@ -155,6 +161,7 @@ cat fasttree.treefile \
     qpfam_c60_g_tree_ufboot_100.treefile \
     GTR_c60_g_mwopt_tree_ufboot_100.treefile \
     GTR_c60_g_mwopt_tree_ufboot.treefile \
+    GTR_c60_g_mwopt_250_tree_noboot.treefile \
      > all_trees.tre
 
 iqtree  -rf_all all_trees.tre -pre rf_distance_matrix
