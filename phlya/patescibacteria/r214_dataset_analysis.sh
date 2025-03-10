@@ -1,9 +1,9 @@
 # input files
 phylum="p__Patescibacteria"
-taxonomy="../../../raw_data/bac120_taxonomy_r202_clean.tsv"
-alignment="../../../raw_data/bac120_msa_reps_r202.faa"
-tree="../../../raw_data/bac120_r202.tree"
-log="log_r202.txt"
+taxonomy="../../../raw_data/bac120_taxonomy_r214_clean.tsv"
+alignment="../../../raw_data/bac120_msa_r214.faa"
+tree="../../../raw_data/bac120_r214.tree"
+log="log_r214.txt"
 subsample=128
 threads=60
 
@@ -34,7 +34,7 @@ echo "Found $N_taxa_aln taxa from $phylum in $alignment" >> $log
 nw_labels -I $tree | sort > all_tips_sorted.txt # gets all tip labels
 sort taxa.txt > taxa_sorted.txt
 comm -23 all_tips_sorted.txt taxa_sorted.txt > tips_to_prune.txt # gets the tips not in my list
-nw_prune $tree $(cat tips_to_prune.txt) > subtree.nwk
+cat tips_to_prune.txt | xargs nw_prune "$tree" > subtree.nwk
 nw_topology -I subtree.nwk > subtree_topology.nwk # discard all unnecessary labels and branch lengths
 sed -E 's/^\((.*)\);$/\1;/' subtree_topology.nwk > subtree_topology_clean.nwk
 nw_labels -I subtree_topology_clean.nwk | sort > subtree_tips.txt
