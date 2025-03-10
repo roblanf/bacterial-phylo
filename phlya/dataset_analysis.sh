@@ -24,7 +24,7 @@ echo "Found $N taxa in $phylum in $taxonomy" >> $log
 
 echo "" >> $log
 echo "" >> $log
-echo " 2. Subsetting alignment and tree" >> $log
+echo "2. Subsetting alignment and tree" >> $log
 
 faSomeRecords $alignment taxa.txt alignment.faa
 N_taxa_aln=$(grep ">" alignment.faa | wc -l)
@@ -77,7 +77,7 @@ cp subtree_tips.txt species.txt
 # now we get a subtree and sub-alignment of 128 random sequences
 echo "" >> $log
 echo "" >> $log
-echo " 4. Subsampling $subsample taxa from alignment and tree for model estimation" >> $log
+echo "3. Subsampling $subsample taxa from alignment and tree for model estimation" >> $log
 
 shuf -n $subsample species.txt > sub_taxa.txt
 faSomeRecords $alignment sub_taxa.txt sub_alignment.faa
@@ -97,7 +97,7 @@ echo "sub_tree.nex has $N_taxa_sub_tree taxa" >> $log
 
 echo "" >> $log
 echo "" >> $log
-echo " 5. Files for analysis" >> $log
+echo "4. Files for analysis" >> $log
 echo "Complete alignment of $N_taxa_aln taxa: alignment.faa" >> $log
 echo "Complete tree of $N_taxa_tree taxa: tree.nex" >> $log
 echo "Sub alignment of $N_taxa_sub_aln taxa: sub_alignment.faa" >> $log
@@ -132,7 +132,7 @@ iqtreelog() {
 
 echo "" >> $log
 echo "" >> $log
-echo " 5. Running IQ-TREE" >> $log
+echo "5. Running IQ-TREE" >> $log
 
 #### GTRpmix on 250 taxon dataset, site freqs on the whole thing: bacteria
 # 1. Get the tree with C60
