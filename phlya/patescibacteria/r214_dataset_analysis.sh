@@ -30,14 +30,40 @@ faSomeRecords $alignment taxa.txt alignment.faa
 N_taxa_aln=$(grep ">" alignment.faa | wc -l)
 echo "Found $N_taxa_aln taxa from $phylum in $alignment" >> $log
 
+
+# tree pruning function
+# because nw_prune can't take the crazy long command lines needed...
+prune_tree_batches() {
+    local tree="$1"
+    local prune_list="$2"
+    local final_tree="$3"
+    local batch_size=10000 # batches of 10K work fine
+    local tmp_tree="tmp_tree.nwk"
+
+    cp "$tree" "$tmp_tree"
+
+    split -l "$batch_size" "$prune_list" prune_batch_
+
+    for batch in prune_batch_*; do
+        echo "Pruning tips in batch: $batch"
+        nw_prune "$tmp_tree" $(cat "$batch") > "${tmp_tree}.tmp"
+        mv "${tmp_tree}.tmp" "$tmp_tree"
+    done
+
+    mv "$tmp_tree" "$final_tree"
+    rm prune_batch_*
+
+    echo "Pruning complete. Final tree: $final_tree"
+}
+
 # get the subtree of just the phylum
 nw_labels -I $tree | sort > all_tips_sorted.txt # gets all tip labels
 sort taxa.txt > taxa_sorted.txt
 comm -23 all_tips_sorted.txt taxa_sorted.txt > tips_to_prune.txt # gets the tips not in my list
-cat tips_to_prune.txt | xargs nw_prune "$tree" > subtree.nwk
+prune_tree_batches $tree tips_to_prune.txt subtree.nwk
 nw_topology -I subtree.nwk > subtree_topology.nwk # discard all unnecessary labels and branch lengths
+nw_labels -I subtree_topology.nwk | sort > subtree_tips.txt
 sed -E 's/^\((.*)\);$/\1;/' subtree_topology.nwk > subtree_topology_clean.nwk
-nw_labels -I subtree_topology_clean.nwk | sort > subtree_tips.txt
 N_taxa_tree=$(wc -l subtree_tips.txt | cut -d ' ' -f1)
 echo "Found $N_taxa_tree taxa from $phylum in $tree" >> $log
 
@@ -49,7 +75,6 @@ cp subtree_tips.txt species.txt
 
 
 # now we get a subtree and sub-alignment of 128 random sequences
-
 echo "" >> $log
 echo "" >> $log
 echo " 4. Subsampling $subsample taxa from alignment and tree for model estimation" >> $log
@@ -58,7 +83,7 @@ shuf -n $subsample species.txt > sub_taxa.txt
 faSomeRecords $alignment sub_taxa.txt sub_alignment.faa
 sort sub_taxa.txt > sub_taxa_sorted.txt
 comm -23 all_tips_sorted.txt sub_taxa_sorted.txt > tips_to_prune.txt # gets the tips not in my list
-nw_prune $tree $(cat tips_to_prune.txt) > sub_tree.nwk
+prune_tree_batches $tree tips_to_prune.txt sub_tree.nwk
 nw_topology -I sub_tree.nwk > sub_tree_topology.nwk # discard all unnecessary labels and branch lengths
 sed -E 's/^\((.*)\);$/\1;/' sub_tree_topology.nwk > sub_tree_topology_clean.nwk
 cp sub_tree_topology_clean.nwk sub_tree.nex
