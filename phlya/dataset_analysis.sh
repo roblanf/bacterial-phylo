@@ -147,16 +147,16 @@ echo "5.2 Estimate GTR+C60 -mwopt from $subsample taxon subset" >> $log
 /usr/bin/time -v -o 02_GTR_c60_g_mwopt.txt iqtree -s sub_alignment.faa -m GTR20+C60+G4 --link-exchange --init-exchange q.pfam -te 01_Qpfam_C60G_sub_tree.treefile -me 0.99 -nt $threads -safe -mwopt -pre 02_GTR_c60_g_mwopt
 iqtreelog "02_GTR_c60_g_mwopt" "$log"
 
-# 3. get the site frequencies using the fasttree tree
+# 3. Estimate site frequencies from sub-tree
 echo "" >> $log
-echo "5.3 Get site profiles for entire dataset" >> $log
-/usr/bin/time -v -o 03_sitefreqs_iteration1.txt iqtree -s alignment.faa -ft tree.nex -m GTRPMIX+C60+G4 -mdef 02_GTR_c60_g_mwopt.GTRPMIX.nex -nt $threads -safe -pre 03_sitefreqs_iteration1 -n 0
-iqtreelog "03_sitefreqs_iteration1" "$log"
+echo "5.3 Estimate site profiles from sub-tree of $subsample taxa with GTR20+C60 PMSF" >> $log
+/usr/bin/time -v -o 03_sitefreqs_subtree.txt iqtree -s sub_alignment.faa -ft 02_GTR_c60_g_mwopt.treefile -m GTRPMIX+C60+G4 -mdef 02_GTR_c60_g_mwopt.GTRPMIX.nex -nt $threads -safe -pre 03_sitefreqs_subtree -n 0
+iqtreelog "03_sitefreqs_subtree" "$log"
 
 # 4. update the tree with this PMSF model
 echo "" >> $log
-echo "5.4 Optimise full tree with GTR20+C60 PMSF" >> $log
-/usr/bin/time -v -o 04_PMSF_tree_iteration1.txt iqtree -s alignment.faa -fs 03_sitefreqs_iteration1.sitefreq -t tree.nex -m GTRPMIX+C60+G4 -mdef 02_GTR_c60_g_mwopt.GTRPMIX.nex -nt $threads -safe -pre 04_PMSF_tree_iteration1
+echo "5.4 Optimise full tree with GTR20+C60 PMSF, using site profiles from sub-tree" >> $log
+/usr/bin/time -v -o 04_PMSF_tree_iteration1.txt iqtree -s alignment.faa -fs 03_sitefreqs_subtree.sitefreq -t tree.nex -m GTRPMIX+C60+G4 -mdef 02_GTR_c60_g_mwopt.GTRPMIX.nex -nt $threads -safe -pre 04_PMSF_tree_iteration1
 iqtreelog "04_PMSF_tree_iteration1" "$log"
 
 # 5. update the site freqs with the new tree
