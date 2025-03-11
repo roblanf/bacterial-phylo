@@ -128,7 +128,30 @@ iqtreelog() {
         sed 's/^/        /' >> "$logfile"
 }
 
+# function to get the mixture weights from an IQ-TREE .iqtree file and put them in a format of a model input
+# e.g. this table from the .iqtree file
+#No  Component      Rate    Weight   Parameters
+#   1  GTR20+FC60pi1  1.0000   0.0136   GTR20+FC60pi1
+#   2  GTR20+FC60pi2  1.0000   0.0168   GTR20+FC60pi2
+#   3  GTR20+FC60pi3  1.0000   0.0207   GTR20+FC60pi3
+#   4  GTR20+FC60pi4  1.0000   0.0076   GTR20+FC60pi4
+# becomes this GTRPMIX+FMIX{{FC60pi1:1.0000:0.0136,FC60pi2:1.0000:0.0168,FC60pi3:1.0000:0.0207,FC60pi4:1.0000:0.0076}+G4
+parse_substitution_process() {
+    local iqtree_file="$1"
 
+    awk '/SUBSTITUTION PROCESS/{flag=1; next} flag && /^[ ]+[0-9]+/{
+        split($2,a,"+");
+        sub(/^F/, "", a[2]);
+        components[++n] = a[2] ":" $3 ":" $4
+    } flag && /^[ ]*$/ && n>0 {flag=0}
+    END {
+        printf "GTRPMIX+FMIX{"
+        for(i=1;i<=n;i++) {
+            printf "%s%s", components[i], (i<n ? "," : "")
+        }
+        printf "}+G4\n"
+    }' "$iqtree_file"
+}
 
 echo "" >> $log
 echo "" >> $log
@@ -146,29 +169,32 @@ echo "" >> $log
 echo "5.2 Estimate GTR+C60 -mwopt from $subsample taxon subset" >> $log
 /usr/bin/time -v -o 02_GTR_c60_g_mwopt.txt iqtree -s sub_alignment.faa -m GTR20+C60+G4 --link-exchange --init-exchange q.pfam -te 01_Qpfam_C60G_sub_tree.treefile -me 0.99 -nt $threads -safe -mwopt -pre 02_GTR_c60_g_mwopt
 iqtreelog "02_GTR_c60_g_mwopt" "$log"
+# extract the model
+gtrpmix_model=$(parse_substitution_process 02_GTR_c60_g_mwopt.iqtree)
+echo "GTRPMIX model from analysis: $gtrpmix_model" >> $log
 
 # 3. Estimate site frequencies from sub-tree
 echo "" >> $log
 echo "5.3 Estimate site profiles from sub-tree of $subsample taxa with GTR20+C60 PMSF" >> $log
-/usr/bin/time -v -o 03_sitefreqs_subtree.txt iqtree -s sub_alignment.faa -ft 02_GTR_c60_g_mwopt.treefile -m GTRPMIX+C60+G4 -mdef 02_GTR_c60_g_mwopt.GTRPMIX.nex -nt $threads -safe -pre 03_sitefreqs_subtree -n 0
+/usr/bin/time -v -o 03_sitefreqs_subtree.txt iqtree -s sub_alignment.faa -ft 02_GTR_c60_g_mwopt.treefile -m "$gtrpmix_model" -mdef 02_GTR_c60_g_mwopt.GTRPMIX.nex -nt $threads -safe -pre 03_sitefreqs_subtree -n 0
 iqtreelog "03_sitefreqs_subtree" "$log"
 
 # 4. update the tree with this PMSF model
 echo "" >> $log
 echo "5.4 Optimise full tree with GTR20+C60 PMSF, using site profiles from sub-tree" >> $log
-/usr/bin/time -v -o 04_PMSF_tree_iteration1.txt iqtree -s alignment.faa -fs 03_sitefreqs_subtree.sitefreq -t tree.nex -m GTRPMIX+C60+G4 -mdef 02_GTR_c60_g_mwopt.GTRPMIX.nex -nt $threads -safe -pre 04_PMSF_tree_iteration1
+/usr/bin/time -v -o 04_PMSF_tree_iteration1.txt iqtree -s alignment.faa -fs 03_sitefreqs_subtree.sitefreq -t tree.nex -m "$gtrpmix_model" -mdef 02_GTR_c60_g_mwopt.GTRPMIX.nex -nt $threads -safe -pre 04_PMSF_tree_iteration1
 iqtreelog "04_PMSF_tree_iteration1" "$log"
 
 # 5. update the site freqs with the new tree
 echo "" >> $log
 echo "5.5 Update site profiles for entire dataset" >> $log
-/usr/bin/time -v -o 05_sitefreqs_iteration2.txt iqtree -s alignment.faa -ft 04_PMSF_tree_iteration1.treefile -m GTRPMIX+C60+G4 -mdef 02_GTR_c60_g_mwopt.GTRPMIX.nex -nt $threads -safe -pre 05_sitefreqs_iteration2 -n 0
+/usr/bin/time -v -o 05_sitefreqs_iteration2.txt iqtree -s alignment.faa -ft 04_PMSF_tree_iteration1.treefile -m "$gtrpmix_model" -mdef 02_GTR_c60_g_mwopt.GTRPMIX.nex -nt $threads -safe -pre 05_sitefreqs_iteration2 -n 0
 iqtreelog "05_sitefreqs_iteration2" "$log"
 
 # 6. Full analysis with UFBOOT
 echo "" >> $log
 echo "5.6 Optimise full tree with GTR20 PMSF + UFBOOT" >> $log
-/usr/bin/time -v -o 06_PMSF_tree_ufboot.txt iqtree -s alignment.faa -fs 05_sitefreqs_iteration2.sitefreq -t 05_sitefreqs_iteration2.treefile -m GTRPMIX+C60+G4 -mdef 02_GTR_c60_g_mwopt.GTRPMIX.nex -nt $threads -safe -pre 06_PMSF_tree_ufboot -bb 1000
+/usr/bin/time -v -o 06_PMSF_tree_ufboot.txt iqtree -s alignment.faa -fs 05_sitefreqs_iteration2.sitefreq -t 05_sitefreqs_iteration2.treefile -m "$gtrpmix_model" -mdef 02_GTR_c60_g_mwopt.GTRPMIX.nex -nt $threads -safe -pre 06_PMSF_tree_ufboot -bb 1000
 iqtreelog "06_PMSF_tree_ufboot" "$log"
 
 
