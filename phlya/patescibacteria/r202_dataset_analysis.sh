@@ -1,9 +1,9 @@
 # input files
 phylum="p__Patescibacteria"
-taxonomy="../../../raw_data/bac120_taxonomy_r214_clean.tsv"
-alignment="../../../raw_data/bac120_msa_r214.faa"
-tree="../../../raw_data/bac120_r214.tree"
-log="log_r214.txt"
+taxonomy="../../../raw_data/bac120_taxonomy_r202_clean.tsv"
+alignment="../../../raw_data/bac120_msa_reps_r202.faa"
+tree="../../../raw_data/bac120_r202.tree"
+log="log_r202.txt"
 subsample=128
 threads=60
 
