@@ -142,7 +142,8 @@ parse_substitution_process() {
     awk '/SUBSTITUTION PROCESS/{flag=1; next} flag && /^[ ]+[0-9]+/{
         split($2,a,"+");
         sub(/^F/, "", a[2]);
-        components[++n] = a[2] ":" $3 ":" $4
+        weight = ($4 == "0.0000") ? "0.00005" : $4; #sometimes weights are 0.000, so this resets them to 0.0005
+        components[++n] = a[2] ":" $3 ":" weight
     } flag && /^[ ]*$/ && n>0 {flag=0}
     END {
         printf "GTRPMIX+FMIX{"
