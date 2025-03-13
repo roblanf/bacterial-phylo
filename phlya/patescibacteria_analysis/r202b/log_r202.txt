@@ -1,0 +1,69 @@
+analysing phylum: p__Patescibacteria
+taxonomy file: ../../../raw_data/bac120_taxonomy_r202_clean.tsv
+alignment file: ../../../raw_data/bac120_msa_reps_r202.faa
+tree file: ../../../raw_data/bac120_r202.tree
+
+
+1. Extracting taxa for p__Patescibacteria from ../../../raw_data/bac120_taxonomy_r202_clean.tsv
+Found 3496 taxa in p__Patescibacteria in ../../../raw_data/bac120_taxonomy_r202_clean.tsv
+
+
+2. Subsetting alignment and tree
+Found 1601 taxa from p__Patescibacteria in ../../../raw_data/bac120_msa_reps_r202.faa
+Found 1601 taxa from p__Patescibacteria in ../../../raw_data/bac120_r202.tree
+
+
+3. Subsampling 128 taxa from alignment and tree for model estimation
+sub_alignmnet.faa has 128 taxa
+sub_tree.nex has 128 taxa
+
+
+4. Files for analysis
+Complete alignment of 1601 taxa: alignment.faa
+Complete tree of 1601 taxa: tree.nex
+Sub alignment of 128 taxa: sub_alignment.faa
+Sub tree of 128 taxa: sub_tree.nex
+
+
+5. Running IQ-TREE
+
+5.1 Get initial tree from 128 taxon subset
+Data from /usr/bin/time and iqtree files for (01_Qpfam_C60G_sub_tree)
+	Command being timed: "iqtree -s sub_alignment.faa -t sub_tree.nex -m Q.pfam+C60+G -nt 60 -safe -pre 01_Qpfam_C60G_sub_tree"
+	User time (seconds): 902745.03
+	System time (seconds): 823.93
+	Percent of CPU this job got: 5982%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 4:11:43
+        IQ-TREE Total wall-clock time used: 15101.777 sec (4h:11m:41s)
+        CPU efficiency: 99.70%
+        Log-likelihood of the tree: -585316.1850 (s.e. 5619.8271)
+        Unconstrained log-likelihood (without tree): -41198.0343
+        Number of free parameters (#branches + #model parameters): 254
+        Akaike information criterion (AIC) score: 1171140.3700
+        Corrected Akaike information criterion (AICc) score: 1171167.4591
+        Bayesian information criterion (BIC) score: 1172797.6097
+        Total tree length (sum of branch lengths): 102.4644
+        Sum of internal branch lengths: 22.8417 (22.2923% of tree length)
+
+5.2 Estimate GTR+C60 -mwopt from 128 taxon subset
+Data from /usr/bin/time and iqtree files for (02_GTR_c60_g_mwopt)
+	Command being timed: "iqtree -s sub_alignment.faa -m GTR20+C60+G4 --link-exchange --init-exchange q.pfam -te 01_Qpfam_C60G_sub_tree.treefile -me 0.99 -nt 60 -safe -mwopt -pre 02_GTR_c60_g_mwopt"
+	User time (seconds): 266184.05
+	System time (seconds): 809.38
+	Percent of CPU this job got: 5536%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:20:22
+        IQ-TREE Total wall-clock time used: 4820.233 sec (1h:20m:20s)
+        CPU efficiency: 92.26%
+GTRPMIX model from analysis: GTRPMIX+FMIX{C60pi1:1.0000:0.0113,C60pi2:1.0000:0.0180,C60pi3:1.0000:0.0260,C60pi4:1.0000:0.0117,C60pi5:1.0000:0.0452,C60pi6:1.0000:0.0119,C60pi7:1.0000:0.0037,C60pi8:1.0000:0.0018,C60pi9:1.0000:0.0035,C60pi10:1.0000:0.0434,C60pi11:1.0000:0.0072,C60pi12:1.0000:0.0053,C60pi13:1.0000:0.0081,C60pi14:1.0000:0.0151,C60pi15:1.0000:0.0080,C60pi16:1.0000:0.0167,C60pi17:1.0000:0.0161,C60pi18:1.0000:0.0393,C60pi19:1.0000:0.0485,C60pi20:1.0000:0.0047,C60pi21:1.0000:0.0005,C60pi22:1.0000:0.0276,C60pi23:1.0000:0.0067,C60pi24:1.0000:0.0243,C60pi25:1.0000:0.0097,C60pi26:1.0000:0.0192,C60pi27:1.0000:0.0293,C60pi28:1.0000:0.0499,C60pi29:1.0000:0.0470,C60pi30:1.0000:0.0217,C60pi31:1.0000:0.0029,C60pi32:1.0000:0.0095,C60pi33:1.0000:0.0237,C60pi34:1.0000:0.0256,C60pi35:1.0000:0.0182,C60pi36:1.0000:0.0187,C60pi37:1.0000:0.0051,C60pi38:1.0000:0.0209,C60pi39:1.0000:0.0032,C60pi40:1.0000:0.0105,C60pi41:1.0000:0.0029,C60pi42:1.0000:0.0044,C60pi43:1.0000:0.0168,C60pi44:1.0000:0.0121,C60pi45:1.0000:0.0124,C60pi46:1.0000:0.0003,C60pi47:1.0000:0.0377,C60pi48:1.0000:0.0127,C60pi49:1.0000:0.0134,C60pi50:1.0000:0.0105,C60pi51:1.0000:0.0064,C60pi52:1.0000:0.0093,C60pi53:1.0000:0.0086,C60pi54:1.0000:0.0201,C60pi55:1.0000:0.0563,C60pi56:1.0000:0.0135,C60pi57:1.0000:0.0094,C60pi58:1.0000:0.0173,C60pi59:1.0000:0.0105,C60pi60:1.0000:0.0056}+G4
+
+5.3 Estimate site profiles from sub-tree of 128 taxa with GTR20+C60 PMSF
+Data from /usr/bin/time and iqtree files for (03_sitefreqs_subtree)
+	Command being timed: "iqtree -s sub_alignment.faa -ft 02_GTR_c60_g_mwopt.treefile -m GTRPMIX+FMIX{C60pi1:1.0000:0.0113,C60pi2:1.0000:0.0180,C60pi3:1.0000:0.0260,C60pi4:1.0000:0.0117,C60pi5:1.0000:0.0452,C60pi6:1.0000:0.0119,C60pi7:1.0000:0.0037,C60pi8:1.0000:0.0018,C60pi9:1.0000:0.0035,C60pi10:1.0000:0.0434,C60pi11:1.0000:0.0072,C60pi12:1.0000:0.0053,C60pi13:1.0000:0.0081,C60pi14:1.0000:0.0151,C60pi15:1.0000:0.0080,C60pi16:1.0000:0.0167,C60pi17:1.0000:0.0161,C60pi18:1.0000:0.0393,C60pi19:1.0000:0.0485,C60pi20:1.0000:0.0047,C60pi21:1.0000:0.0005,C60pi22:1.0000:0.0276,C60pi23:1.0000:0.0067,C60pi24:1.0000:0.0243,C60pi25:1.0000:0.0097,C60pi26:1.0000:0.0192,C60pi27:1.0000:0.0293,C60pi28:1.0000:0.0499,C60pi29:1.0000:0.0470,C60pi30:1.0000:0.0217,C60pi31:1.0000:0.0029,C60pi32:1.0000:0.0095,C60pi33:1.0000:0.0237,C60pi34:1.0000:0.0256,C60pi35:1.0000:0.0182,C60pi36:1.0000:0.0187,C60pi37:1.0000:0.0051,C60pi38:1.0000:0.0209,C60pi39:1.0000:0.0032,C60pi40:1.0000:0.0105,C60pi41:1.0000:0.0029,C60pi42:1.0000:0.0044,C60pi43:1.0000:0.0168,C60pi44:1.0000:0.0121,C60pi45:1.0000:0.0124,C60pi46:1.0000:0.0003,C60pi47:1.0000:0.0377,C60pi48:1.0000:0.0127,C60pi49:1.0000:0.0134,C60pi50:1.0000:0.0105,C60pi51:1.0000:0.0064,C60pi52:1.0000:0.0093,C60pi53:1.0000:0.0086,C60pi54:1.0000:0.0201,C60pi55:1.0000:0.0563,C60pi56:1.0000:0.0135,C60pi57:1.0000:0.0094,C60pi58:1.0000:0.0173,C60pi59:1.0000:0.0105,C60pi60:1.0000:0.0056}+G4 -mdef 02_GTR_c60_g_mwopt.GTRPMIX.nex -nt 60 -safe -pre 03_sitefreqs_subtree -n 0"
+	User time (seconds): 6831.79
+	System time (seconds): 128.64
+	Percent of CPU this job got: 5704%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 2:02.01
+        IQ-TREE Total wall-clock time used: 5.041 sec (0h:0m:5s)
+        CPU efficiency: 95.06%
+
+5.4 Optimise full tree with GTR20+C60 PMSF, using site profiles from sub-tree

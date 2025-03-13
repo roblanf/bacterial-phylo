@@ -1,0 +1,287 @@
+IQ-TREE multicore version 2.4.0 for Linux x86 64-bit built Feb 12 2025
+Developed by Bui Quang Minh, Nguyen Lam Tung, Olga Chernomor, Heiko Schmidt,
+Dominik Schrempf, Michael Woodhams, Ly Trong Nhan, Thomas Wong
+
+Host:    nova.rsb.anu.edu.au (AVX512, FMA3, 2267 GB RAM)
+Command: iqtree -s sub_alignment.faa -t sub_tree.nex -m Q.pfam+C60+G -nt 60 -safe -pre 01_Qpfam_C60G_sub_tree
+Seed:    443268 (Using SPRNG - Scalable Parallel Random Number Generator)
+Time:    Tue Mar 11 22:55:52 2025
+Kernel:  Safe AVX+FMA - 60 threads (384 CPU cores detected)
+
+Reading alignment file sub_alignment.faa ... Fasta format detected
+Reading fasta file: done in 0.00960816 secs using 95.77% CPU
+Alignment most likely contains protein sequences
+WARNING: 274 sites contain only gaps or ambiguous characters.
+Alignment has 128 sequences with 5035 columns, 4670 distinct patterns
+4418 parsimony-informative, 157 singleton sites, 460 constant sites
+                    Gap/Ambiguity  Composition  p-value
+Analyzing sequences: done in 0.000214975 secs using 1360% CPU
+   1  GB_GCA_018826405.1   43.91%    failed      0.00%
+   2  GB_GCA_002402995.1   28.82%    failed      0.00%
+   3  GB_GCA_019744845.1   31.36%    failed      0.00%
+   4  GB_GCA_913060955.1   52.49%    failed      0.29%
+   5  GB_GCA_001773695.1   40.28%    failed      0.09%
+   6  GB_GCA_001778275.1   47.71%    failed      3.54%
+   7  GB_GCA_015485595.1   39.62%    failed      0.43%
+   8  GB_GCA_018816885.1   24.31%    passed     19.32%
+   9  GB_GCA_023267245.1   46.38%    failed      1.50%
+  10  GB_GCA_021799595.1   24.03%    failed      0.00%
+  11  GB_GCA_016206505.1   34.60%    failed      0.07%
+  12  GB_GCA_003560095.1   38.71%    failed      0.00%
+  13  GB_GCA_021781475.1   29.26%    failed      0.00%
+  14  GB_GCA_903821365.1   24.05%    failed      0.00%
+  15  GB_GCA_016927685.1   27.57%    failed      0.00%
+  16  GB_GCA_021786695.1   32.83%    failed      2.46%
+  17  GB_GCA_002772645.1   37.14%    failed      0.00%
+  18  GB_GCA_003505155.1   29.61%    failed      0.00%
+  19  GB_GCA_016183305.1   41.69%    passed     11.30%
+  20  GB_GCA_002747745.1   22.80%    failed      0.01%
+  21  GB_GCA_001783255.1   32.47%    passed     21.17%
+  22  GB_GCA_018827845.1   41.47%    failed      0.00%
+  23  GB_GCA_001789695.1   37.44%    failed      0.00%
+  24  GB_GCA_002779665.1   47.41%    failed      0.00%
+  25  GB_GCA_001817915.1   34.12%    failed      0.02%
+  26  GB_GCA_017511205.1   30.47%    failed      1.55%
+  27  GB_GCA_943355185.1   62.98%    passed     29.75%
+  28  GB_GCA_016699365.1   30.47%    failed      0.78%
+  29  GB_GCA_023898525.1   28.94%    failed      1.66%
+  30  GB_GCA_000991415.1   35.21%    failed      0.00%
+  31  GB_GCA_007376485.1   29.99%    passed     79.76%
+  32  GB_GCA_001786195.1   31.70%    failed      0.49%
+  33  GB_GCA_020850575.1   24.27%    failed      0.02%
+  34  GB_GCA_001788295.1   37.97%    failed      0.00%
+  35  GB_GCA_022736555.1   25.02%    failed      0.00%
+  36  GB_GCA_001779455.1   40.36%    failed      0.02%
+  37  GB_GCA_016186115.1   29.69%    failed      0.00%
+  38  GB_GCA_004136275.1   27.15%    failed      0.00%
+  39  GB_GCA_003514055.1   34.94%    passed      6.09%
+  40  GB_GCA_903857825.1   32.69%    failed      0.26%
+  41  GB_GCA_016208545.1   26.81%    passed     28.37%
+  42  GB_GCA_903907165.1   32.04%    passed     64.48%
+  43  GB_GCA_021106915.1   35.49%    failed      0.00%
+  44  GB_GCA_023268615.1   23.38%    failed      0.00%
+  45  GB_GCA_020632135.1   50.94%    failed      1.81%
+  46  GB_GCA_903923535.1   35.05%    failed      0.00%
+  47  GB_GCA_023473845.1   49.87%    failed      0.05%
+  48  GB_GCA_943354875.1   36.09%    passed     25.86%
+  49  GB_GCA_001791035.1   32.37%    failed      0.00%
+  50  GB_GCA_001819295.1   44.91%    failed      0.01%
+  51  GB_GCA_903889015.1   58.71%    failed      0.00%
+  52  GB_GCA_943354645.1   40.87%    passed     48.13%
+  53  GB_GCA_903920975.1   29.61%    failed      0.00%
+  54  GB_GCA_002305125.1   39.29%    failed      0.00%
+  55  GB_GCA_007378985.1   30.71%    failed      0.03%
+  56  GB_GCA_001872545.1   29.59%    failed      0.00%
+  57  GB_GCA_001782825.1   22.74%    failed      0.01%
+  58  GB_GCA_943354165.1   26.51%    failed      0.00%
+  59  GB_GCA_000991405.1   28.22%    failed      4.44%
+  60  GB_GCA_018816645.1   28.32%    failed      0.11%
+  61  GB_GCA_903861715.1   24.09%    passed     20.63%
+  62  GB_GCA_001785615.1   38.51%    passed     13.01%
+  63  GB_GCA_017404725.1   29.71%    passed     44.52%
+  64  GB_GCA_000997945.1   30.39%    passed     14.82%
+  65  GB_GCA_943359325.1   27.88%    failed      0.00%
+  66  GB_GCA_018814945.1   42.09%    failed      2.95%
+  67  GB_GCA_023267275.1   33.57%    failed      1.59%
+  68  GB_GCA_002787855.1   43.30%    failed      0.20%
+  69  GB_GCA_020639315.1   46.32%    failed      0.00%
+  70  GB_GCA_020631485.1   20.73%    failed      0.00%
+  71  GB_GCA_016186625.1   40.99%    passed     14.96%
+  72  GB_GCA_903933735.1   35.67%    failed      0.00%
+  73  GB_GCA_016789455.1   24.29%    failed      0.00%
+  74  GB_GCA_001821915.1   36.90%    failed      0.00%
+  75  GB_GCA_021814825.1   43.89%    failed      0.00%
+  76  GB_GCA_001776335.1   33.60%    passed     95.80%
+  77  GB_GCA_016860785.1   37.18%    failed      0.01%
+  78  GB_GCA_025061805.1   39.42%    failed      0.00%
+  79  GB_GCA_002413065.1   36.21%    passed     39.24%
+  80  GB_GCA_015489595.1   34.64%    failed      0.00%
+  81  GB_GCA_001779535.1   39.86%    failed      2.64%
+  82  GB_GCA_004100265.1   27.90%    failed      0.00%
+  83  GB_GCA_903870365.1   35.35%    failed      0.18%
+  84  GB_GCA_001817115.1   33.05%    failed      0.00%
+  85  GB_GCA_002408565.1   34.52%    failed      0.00%
+  86  GB_GCA_019248485.1   23.79%    failed      0.00%
+  87  GB_GCA_002747975.1   22.76%    failed      0.00%
+  88  GB_GCA_020058565.1   48.78%    failed      0.06%
+  89  GB_GCA_001781685.1   44.05%    failed      0.00%
+  90  GB_GCA_003559635.1   34.08%    failed      0.00%
+  91  GB_GCA_018062585.1   31.96%    failed      0.00%
+  92  GB_GCA_007376535.1   34.92%    failed      0.00%
+  93  GB_GCA_016188975.1   35.81%    passed     22.77%
+  94  GB_GCA_001897305.1   26.26%    failed      0.00%
+  95  GB_GCA_002793035.1   26.08%    failed      1.11%
+  96  GB_GCA_022837635.1   41.95%    failed      0.14%
+  97  GB_GCA_001783145.1   23.61%    passed     11.61%
+  98  GB_GCA_002788755.1   29.79%    failed      0.30%
+  99  GB_GCA_017431465.1   34.40%    passed     25.11%
+ 100  GB_GCA_014729725.1   25.26%    failed      0.00%
+ 101  GB_GCA_002772535.1   19.60%    failed      0.64%
+ 102  GB_GCA_943359365.1   39.15%    passed     10.19%
+ 103  GB_GCA_016182235.1   47.41%    failed      0.00%
+ 104  GB_GCA_002293825.1   25.36%    failed      2.30%
+ 105  GB_GCA_016220165.1   19.48%    failed      0.10%
+ 106  GB_GCA_013335665.1   38.87%    passed     22.04%
+ 107  GB_GCA_002402455.1   37.86%    failed      0.00%
+ 108  GB_GCA_004563595.2   19.07%    failed      0.00%
+ 109  GB_GCA_016207805.1   23.18%    failed      0.27%
+ 110  GB_GCA_009995495.1   25.94%    failed      0.00%
+ 111  GB_GCA_002774185.1   55.39%    failed      0.05%
+ 112  GB_GCA_943350045.1   41.89%    failed      0.00%
+ 113  GB_GCA_022560785.1   37.86%    failed      3.86%
+ 114  GB_GCA_016214465.1   31.46%    passed     35.45%
+ 115  GB_GCA_021811685.1   60.14%    failed      0.00%
+ 116  GB_GCA_020148045.1   35.55%    failed      0.00%
+ 117  GB_GCA_020850635.1   31.70%    failed      0.56%
+ 118  GB_GCA_002772205.1   42.72%    failed      0.00%
+ 119  GB_GCA_016217835.1   40.34%    failed      0.22%
+ 120  GB_GCA_018061945.1   18.89%    failed      0.00%
+ 121  GB_GCA_023137615.1   33.31%    passed     24.94%
+ 122  GB_GCA_001824275.1   38.41%    failed      0.00%
+ 123  GB_GCA_016180435.1   28.28%    failed      0.00%
+ 124  GB_GCA_023140255.1   32.75%    failed      0.00%
+ 125  GB_GCA_004297205.1   22.50%    failed      0.00%
+ 126  GB_GCA_018901555.1   44.53%    failed      0.00%
+ 127  GB_GCA_903873095.1   42.26%    passed     34.17%
+ 128  GB_GCA_024653645.1   41.13%    failed      4.37%
+WARNING: 6 sequences contain more than 50% gaps/ambiguity
+****  TOTAL                34.55%  103 sequences failed composition chi2 test (p-value<5%; df=19)
+Reading input tree file sub_tree.nex ... rooted tree
+WARNING: 254 undefined/negative branch lengths are initialized with parsimony
+Model Q.pfam+C60+G is alias for Q.pfam+POISSON+G+FMIX{C60pi1:1:0.0169698865,C60pi2:1:0.0211683374,C60pi3:1:0.0276589079,C60pi4:1:0.0065675964,C60pi5:1:0.0141221416,C60pi6:1:0.0068774834,C60pi7:1:0.0146909701,C60pi8:1:0.0067225777,C60pi9:1:0.0018396660,C60pi10:1:0.0102547197,C60pi11:1:0.0230896163,C60pi12:1:0.0057941033,C60pi13:1:0.0125394534,C60pi14:1:0.0204526478,C60pi15:1:0.0070629602,C60pi16:1:0.0117982741,C60pi17:1:0.0068334668,C60pi18:1:0.0433775839,C60pi19:1:0.0318278731,C60pi20:1:0.0222546108,C60pi21:1:0.0102264969,C60pi22:1:0.0150545891,C60pi23:1:0.0134159878,C60pi24:1:0.0148552065,C60pi25:1:0.0239111516,C60pi26:1:0.0128776278,C60pi27:1:0.0222318842,C60pi28:1:0.0247444742,C60pi29:1:0.0214274810,C60pi30:1:0.0115001882,C60pi31:1:0.0076017389,C60pi32:1:0.0130258568,C60pi33:1:0.0093701965,C60pi34:1:0.0467194264,C60pi35:1:0.0441940314,C60pi36:1:0.0322263154,C60pi37:1:0.0402999891,C60pi38:1:0.0150234227,C60pi39:1:0.0104589903,C60pi40:1:0.0214742395,C60pi41:1:0.0154957836,C60pi42:1:0.0101789953,C60pi43:1:0.0227980379,C60pi44:1:0.0123204539,C60pi45:1:0.0066777583,C60pi46:1:0.0004150083,C60pi47:1:0.0344385130,C60pi48:1:0.0113663379,C60pi49:1:0.0127143049,C60pi50:1:0.0124323741,C60pi51:1:0.0262124415,C60pi52:1:0.0064994957,C60pi53:1:0.0103203293,C60pi54:1:0.0142463512,C60pi55:1:0.0215600067,C60pi56:1:0.0199150700,C60pi57:1:0.0038964200,C60pi58:1:0.0113448855,C60pi59:1:0.0128595846,C60pi60:1:0.0117656776}+G
+WARNING: Your input class weight 0.000415008 is very small and may cause numerical issues
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+WARNING: Normalizing state frequencies so that sum of them equals to 1
+
+NOTE: 22269 MB RAM (21 GB) is required!
+Estimate model parameters (epsilon = 0.100)
+1. Initial log-likelihood: -609244.743
+2. Current log-likelihood: -596347.505
+3. Current log-likelihood: -596007.253
+4. Current log-likelihood: -595969.807
+5. Current log-likelihood: -595962.202
+6. Current log-likelihood: -595960.590
+7. Current log-likelihood: -595960.329
+Optimal log-likelihood: -595960.244
+Mixture weights: 0.017 0.021 0.028 0.007 0.014 0.007 0.015 0.007 0.002 0.010 0.023 0.006 0.013 0.020 0.007 0.012 0.007 0.043 0.032 0.022 0.010 0.015 0.013 0.015 0.024 0.013 0.022 0.025 0.021 0.012 0.008 0.013 0.009 0.047 0.044 0.032 0.040 0.015 0.010 0.021 0.015 0.010 0.023 0.012 0.007 0.000 0.034 0.011 0.013 0.012 0.026 0.006 0.010 0.014 0.022 0.020 0.004 0.011 0.013 0.012
+Gamma shape alpha: 1.102
+Parameters optimization took 7 rounds (140.976 sec)
+Wrote distance file to... 
+
+Do NNI search on 1 best initial trees
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 1: -595176.548
+Finish initializing candidate tree set (2)
+Current best tree score: -595176.548 / CPU time: 112.105
+Number of iterations: 1
+--------------------------------------------------------------------
+|               OPTIMIZING CANDIDATE TREE SET                      |
+--------------------------------------------------------------------
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 2: -595173.590
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 8: -595172.369
+Iteration 10 / LogL: -595174.035 / Time: 0h:24m:19s
+Iteration 20 / LogL: -595181.230 / Time: 0h:44m:28s
+Iteration 30 / LogL: -595173.566 / Time: 1h:4m:19s (2h:53m:0s left)
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 40: -595170.745
+Iteration 40 / LogL: -595170.745 / Time: 1h:24m:59s (3h:37m:56s left)
+Iteration 50 / LogL: -595173.780 / Time: 1h:44m:34s (3h:12m:4s left)
+Iteration 60 / LogL: -595174.786 / Time: 2h:5m:43s (2h:50m:28s left)
+Iteration 70 / LogL: -595174.138 / Time: 2h:26m:3s (2h:28m:10s left)
+Iteration 80 / LogL: -595171.749 / Time: 2h:45m:44s (2h:5m:52s left)
+Iteration 90 / LogL: -595175.918 / Time: 3h:5m:21s (1h:44m:8s left)
+Estimate model parameters (epsilon = 0.100)
+UPDATE BEST LOG-LIKELIHOOD: -595168.817
+Iteration 100 / LogL: -595175.503 / Time: 3h:25m:53s (1h:23m:11s left)
+Iteration 110 / LogL: -595172.127 / Time: 3h:46m:25s (1h:2m:19s left)
+Iteration 120 / LogL: -595175.053 / Time: 4h:5m:59s (0h:41m:20s left)
+Iteration 130 / LogL: -595174.210 / Time: 4h:25m:47s (0h:20m:36s left)
+Iteration 140 / LogL: -595174.324 / Time: 4h:45m:17s (0h:0m:0s left)
+TREE SEARCH COMPLETED AFTER 141 ITERATIONS / Time: 4h:47m:15s
+
+--------------------------------------------------------------------
+|                    FINALIZING TREE SEARCH                        |
+--------------------------------------------------------------------
+Performs final model parameters optimization
+Estimate model parameters (epsilon = 0.010)
+1. Initial log-likelihood: -595168.817
+2. Current log-likelihood: -595168.796
+Optimal log-likelihood: -595168.789
+Mixture weights: 0.017 0.021 0.028 0.007 0.014 0.007 0.015 0.007 0.002 0.010 0.023 0.006 0.013 0.020 0.007 0.012 0.007 0.043 0.032 0.022 0.010 0.015 0.013 0.015 0.024 0.013 0.022 0.025 0.021 0.012 0.008 0.013 0.009 0.047 0.044 0.032 0.040 0.015 0.010 0.021 0.015 0.010 0.023 0.012 0.007 0.000 0.034 0.011 0.013 0.012 0.026 0.006 0.010 0.014 0.022 0.020 0.004 0.011 0.013 0.012
+Gamma shape alpha: 1.100
+Parameters optimization took 2 rounds (24.220 sec)
+BEST SCORE FOUND : -595168.789
+Total tree length: 97.834
+
+Total number of iterations: 141
+CPU time used for tree search: 1020577.120 sec (283h:29m:37s)
+Wall-clock time used for tree search: 17094.449 sec (4h:44m:54s)
+Total CPU time used: 1029683.814 sec (286h:1m:23s)
+Total wall-clock time used: 17259.716 sec (4h:47m:39s)
+
+Analysis results written to: 
+  IQ-TREE report:                01_Qpfam_C60G_sub_tree.iqtree
+  Maximum-likelihood tree:       01_Qpfam_C60G_sub_tree.treefile
+  Screen log file:               01_Qpfam_C60G_sub_tree.log
+
+Date and Time: Wed Mar 12 03:43:34 2025

@@ -1,0 +1,48 @@
+analysing phylum: p__Patescibacteria
+taxonomy file: ../../../raw_data/bac120_taxonomy_r220_clean.tsv
+alignment file: ../../../raw_data/bac120_msa_reps_r220.faa
+tree file: ../../../raw_data/bac120_r220.tree
+
+
+1. Extracting taxa for p__Patescibacteria from ../../../raw_data/bac120_taxonomy_r220_clean.tsv
+Found 8106 taxa in p__Patescibacteria in ../../../raw_data/bac120_taxonomy_r220_clean.tsv
+
+
+2. Subsetting alignment and tree
+Found 4581 taxa from p__Patescibacteria in ../../../raw_data/bac120_msa_reps_r220.faa
+Found 4581 taxa from p__Patescibacteria in ../../../raw_data/bac120_r220.tree
+
+
+3. Subsampling 128 taxa from alignment and tree for model estimation
+sub_alignmnet.faa has 128 taxa
+sub_tree.nex has 128 taxa
+
+
+4. Files for analysis
+Complete alignment of 4581 taxa: alignment.faa
+Complete tree of 4581 taxa: tree.nex
+Sub alignment of 128 taxa: sub_alignment.faa
+Sub tree of 128 taxa: sub_tree.nex
+
+
+5. Running IQ-TREE
+
+5.1 Get initial tree from 128 taxon subset
+Data from /usr/bin/time and iqtree files for (01_Qpfam_C60G_sub_tree)
+	Command being timed: "iqtree -s sub_alignment.faa -t sub_tree.nex -m Q.pfam+C60+G -nt 60 -safe -pre 01_Qpfam_C60G_sub_tree"
+	User time (seconds): 906763.08
+	System time (seconds): 715.55
+	Percent of CPU this job got: 5960%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 4:13:45
+        IQ-TREE Total wall-clock time used: 15223.830 sec (4h:13m:43s)
+        CPU efficiency: 99.33%
+        Log-likelihood of the tree: -575814.6728 (s.e. 5554.2691)
+        Unconstrained log-likelihood (without tree): -41147.1102
+        Number of free parameters (#branches + #model parameters): 254
+        Akaike information criterion (AIC) score: 1152137.3455
+        Corrected Akaike information criterion (AICc) score: 1152164.4459
+        Bayesian information criterion (BIC) score: 1153794.4844
+        Total tree length (sum of branch lengths): 102.3262
+        Sum of internal branch lengths: 23.5652 (23.0295% of tree length)
+
+5.2 Estimate GTR+C60 -mwopt from 128 taxon subset

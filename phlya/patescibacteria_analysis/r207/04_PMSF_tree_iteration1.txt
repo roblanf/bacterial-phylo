@@ -1,0 +1,23 @@
+	Command being timed: "iqtree -s alignment.faa -fs 03_sitefreqs_subtree.sitefreq -t tree.nex -m GTRPMIX+FMIX{C60pi1:1.0000:0.0148,C60pi2:1.0000:0.0197,C60pi3:1.0000:0.0177,C60pi4:1.0000:0.0098,C60pi5:1.0000:0.0335,C60pi6:1.0000:0.0103,C60pi7:1.0000:0.0050,C60pi8:1.0000:0.0018,C60pi9:1.0000:0.0049,C60pi10:1.0000:0.0529,C60pi11:1.0000:0.0084,C60pi12:1.0000:0.0099,C60pi13:1.0000:0.0078,C60pi14:1.0000:0.0198,C60pi15:1.0000:0.0054,C60pi16:1.0000:0.0141,C60pi17:1.0000:0.0115,C60pi18:1.0000:0.0408,C60pi19:1.0000:0.0469,C60pi20:1.0000:0.0031,C60pi21:1.0000:0.0005,C60pi22:1.0000:0.0311,C60pi23:1.0000:0.0071,C60pi24:1.0000:0.0237,C60pi25:1.0000:0.0094,C60pi26:1.0000:0.0173,C60pi27:1.0000:0.0316,C60pi28:1.0000:0.0437,C60pi29:1.0000:0.0460,C60pi30:1.0000:0.0147,C60pi31:1.0000:0.0035,C60pi32:1.0000:0.0099,C60pi33:1.0000:0.0295,C60pi34:1.0000:0.0323,C60pi35:1.0000:0.0215,C60pi36:1.0000:0.0173,C60pi37:1.0000:0.0047,C60pi38:1.0000:0.0200,C60pi39:1.0000:0.0029,C60pi40:1.0000:0.0089,C60pi41:1.0000:0.0041,C60pi42:1.0000:0.0049,C60pi43:1.0000:0.0164,C60pi44:1.0000:0.0127,C60pi45:1.0000:0.0073,C60pi46:1.0000:0.0015,C60pi47:1.0000:0.0372,C60pi48:1.0000:0.0182,C60pi49:1.0000:0.0101,C60pi50:1.0000:0.0132,C60pi51:1.0000:0.0064,C60pi52:1.0000:0.0093,C60pi53:1.0000:0.0080,C60pi54:1.0000:0.0178,C60pi55:1.0000:0.0558,C60pi56:1.0000:0.0116,C60pi57:1.0000:0.0114,C60pi58:1.0000:0.0206,C60pi59:1.0000:0.0140,C60pi60:1.0000:0.0060}+G4 -mdef 02_GTR_c60_g_mwopt.GTRPMIX.nex -nt 60 -safe -pre 04_PMSF_tree_iteration1"
+	User time (seconds): 916763.50
+	System time (seconds): 1759.14
+	Percent of CPU this job got: 5930%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 4:18:06
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 10273896
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 62
+	Minor (reclaiming a frame) page faults: 137444915
+	Voluntary context switches: 153094
+	Involuntary context switches: 364268
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 38592
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
