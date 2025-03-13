@@ -1,0 +1,57 @@
+---
+title: "Patescibacteria phylogenies"
+author: "Rob Lanfear"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    css: ../../style.css
+    toc: yes
+    toc_depth: 4
+    theme: cosmo
+    number_sections: no
+    toc_float: yes
+    highlight: pygments
+    fig_width: 8
+    fig_height: 4
+  word_document:
+    toc: yes
+    toc_depth: '4'
+  pdf_document:
+    toc: yes
+    toc_depth: '4'
+    pandoc_args: --listings
+    includes:
+      in_header: preamble.tex
+editor_options: 
+  chunk_output_type: console
+---
+
+
+# Intro 
+
+Let's look at the trees and models we've built for the patescibacteria.
+
+## Datasets
+
+We have 4 datasets: r202, r207, r214, r220. For each, we have the GTDB tree estimated in FastTree, and then my tree estimated with a GTR20+C60 PMSF model in IQ-TREE.
+
+The datasets have increasing numbers of taxa for patescibacteria:
+
+* r202: 1601 taxa
+* r207: 2485 taxa
+* r214: 3374 taxa
+* r220: 4581 taxa
+
+## r202 tree comparison
+
+Let's load the FastTree and the IQ-TREE tree for each dataset
+
+```{r}
+library(phangorn)
+setwd("/Users/roblanfear/Documents/github/bacterial-phylo/phlya/patescibacteria_analysis")
+r202_ft <- unroot(read.tree("r202/subtree.nwk"))
+r202_iq <- read.tree("r202/06_PMSF_tree_ufboot.treefile")
+```
+
+A few simple comparisons
+
