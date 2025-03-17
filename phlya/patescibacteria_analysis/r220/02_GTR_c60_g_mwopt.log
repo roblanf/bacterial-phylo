@@ -229,3 +229,59 @@ Restart estimation at the boundary... multiplying all values up
 Restart estimation at the boundary... multiplying all values up
 Restart estimation at the boundary... multiplying all values up
 5. Current log-likelihood: -568014.760
+Restart estimation at the boundary... multiplying all values up
+Restart estimation at the boundary... multiplying all values up
+Restart estimation at the boundary... multiplying all values up
+6. Current log-likelihood: -567991.519
+Restart estimation at the boundary... multiplying all values up
+Restart estimation at the boundary... multiplying all values up
+Restart estimation at the boundary... multiplying all values up
+7. Current log-likelihood: -567981.351
+Restart estimation at the boundary... multiplying all values up
+Restart estimation at the boundary... multiplying all values up
+Restart estimation at the boundary... multiplying all values up
+8. Current log-likelihood: -567977.630
+Restart estimation at the boundary... multiplying all values up
+Restart estimation at the boundary... multiplying all values up
+Restart estimation at the boundary... multiplying all values up
+9. Current log-likelihood: -567975.830
+Restart estimation at the boundary... multiplying all values up
+Restart estimation at the boundary... multiplying all values up
+Restart estimation at the boundary... multiplying all values up
+10. Current log-likelihood: -567974.451
+Restart estimation at the boundary... multiplying all values up
+Restart estimation at the boundary... multiplying all values up
+Restart estimation at the boundary... multiplying all values up
+11. Current log-likelihood: -567973.322
+Restart estimation at the boundary... multiplying all values up
+Restart estimation at the boundary... multiplying all values up
+Restart estimation at the boundary... multiplying all values up
+12. Current log-likelihood: -567970.243
+Restart estimation at the boundary... multiplying all values up
+Restart estimation at the boundary... multiplying all values up
+Restart estimation at the boundary... multiplying all values up
+13. Current log-likelihood: -567965.138
+Restart estimation at the boundary... multiplying all values up
+Restart estimation at the boundary... multiplying all values up
+Restart estimation at the boundary... multiplying all values up
+Optimal log-likelihood: -567964.099
+Mixture weights: 0.006 0.016 0.022 0.012 0.028 0.014 0.005 0.003 0.004 0.052 0.006 0.010 0.009 0.017 0.010 0.019 0.014 0.038 0.047 0.005 0.001 0.032 0.007 0.029 0.011 0.018 0.032 0.048 0.049 0.021 0.003 0.012 0.028 0.023 0.020 0.017 0.008 0.016 0.001 0.016 0.004 0.006 0.011 0.011 0.008 0.001 0.038 0.015 0.015 0.008 0.007 0.010 0.007 0.015 0.062 0.011 0.011 0.018 0.010 0.004
+Gamma shape alpha: 1.343
+Parameters optimization took 13 rounds (19912.359 sec)
+Wrote distance file to... 
+BEST SCORE FOUND : -567964.099
+Total tree length: 65.726
+
+Total number of iterations: 0
+CPU time used for tree search: 0.000 sec (0h:0m:0s)
+Wall-clock time used for tree search: 0.000 sec (0h:0m:0s)
+Total CPU time used: 1056472.711 sec (293h:27m:52s)
+Total wall-clock time used: 19912.396 sec (5h:31m:52s)
+
+Analysis results written to: 
+  IQ-TREE report:                02_GTR_c60_g_mwopt.iqtree
+  Maximum-likelihood tree:       02_GTR_c60_g_mwopt.treefile
+  Screen log file:               02_GTR_c60_g_mwopt.log
+  GTRPMIX nex file:              02_GTR_c60_g_mwopt.GTRPMIX.nex
+
+Date and Time: Thu Mar 13 18:03:32 2025

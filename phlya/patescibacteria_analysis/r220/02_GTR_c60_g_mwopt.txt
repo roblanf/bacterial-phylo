@@ -1,0 +1,23 @@
+	Command being timed: "iqtree -s sub_alignment.faa -m GTR20+C60+G4 --link-exchange --init-exchange q.pfam -te 01_Qpfam_C60G_sub_tree.treefile -me 0.99 -nt 60 -safe -mwopt -pre 02_GTR_c60_g_mwopt"
+	User time (seconds): 1056473.94
+	System time (seconds): 1076.18
+	Percent of CPU this job got: 5309%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 5:31:57
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 23043324
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 80
+	Minor (reclaiming a frame) page faults: 459338219
+	Voluntary context switches: 1669406
+	Involuntary context switches: 1841686
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 608
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

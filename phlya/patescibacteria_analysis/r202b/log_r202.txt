@@ -67,3 +67,47 @@ Data from /usr/bin/time and iqtree files for (03_sitefreqs_subtree)
         CPU efficiency: 95.06%
 
 5.4 Optimise full tree with GTR20+C60 PMSF, using site profiles from sub-tree
+Data from /usr/bin/time and iqtree files for (04_PMSF_tree_iteration1)
+	Command being timed: "iqtree -s alignment.faa -fs 03_sitefreqs_subtree.sitefreq -t tree.nex -m GTRPMIX+FMIX{C60pi1:1.0000:0.0113,C60pi2:1.0000:0.0180,C60pi3:1.0000:0.0260,C60pi4:1.0000:0.0117,C60pi5:1.0000:0.0452,C60pi6:1.0000:0.0119,C60pi7:1.0000:0.0037,C60pi8:1.0000:0.0018,C60pi9:1.0000:0.0035,C60pi10:1.0000:0.0434,C60pi11:1.0000:0.0072,C60pi12:1.0000:0.0053,C60pi13:1.0000:0.0081,C60pi14:1.0000:0.0151,C60pi15:1.0000:0.0080,C60pi16:1.0000:0.0167,C60pi17:1.0000:0.0161,C60pi18:1.0000:0.0393,C60pi19:1.0000:0.0485,C60pi20:1.0000:0.0047,C60pi21:1.0000:0.0005,C60pi22:1.0000:0.0276,C60pi23:1.0000:0.0067,C60pi24:1.0000:0.0243,C60pi25:1.0000:0.0097,C60pi26:1.0000:0.0192,C60pi27:1.0000:0.0293,C60pi28:1.0000:0.0499,C60pi29:1.0000:0.0470,C60pi30:1.0000:0.0217,C60pi31:1.0000:0.0029,C60pi32:1.0000:0.0095,C60pi33:1.0000:0.0237,C60pi34:1.0000:0.0256,C60pi35:1.0000:0.0182,C60pi36:1.0000:0.0187,C60pi37:1.0000:0.0051,C60pi38:1.0000:0.0209,C60pi39:1.0000:0.0032,C60pi40:1.0000:0.0105,C60pi41:1.0000:0.0029,C60pi42:1.0000:0.0044,C60pi43:1.0000:0.0168,C60pi44:1.0000:0.0121,C60pi45:1.0000:0.0124,C60pi46:1.0000:0.0003,C60pi47:1.0000:0.0377,C60pi48:1.0000:0.0127,C60pi49:1.0000:0.0134,C60pi50:1.0000:0.0105,C60pi51:1.0000:0.0064,C60pi52:1.0000:0.0093,C60pi53:1.0000:0.0086,C60pi54:1.0000:0.0201,C60pi55:1.0000:0.0563,C60pi56:1.0000:0.0135,C60pi57:1.0000:0.0094,C60pi58:1.0000:0.0173,C60pi59:1.0000:0.0105,C60pi60:1.0000:0.0056}+G4 -mdef 02_GTR_c60_g_mwopt.GTRPMIX.nex -nt 60 -safe -pre 04_PMSF_tree_iteration1"
+	User time (seconds): 1820926.61
+	System time (seconds): 4482.67
+	Percent of CPU this job got: 5952%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 8:31:06
+        IQ-TREE Total wall-clock time used: 30664.144 sec (8h:31m:4s)
+        CPU efficiency: 99.20%
+        Log-likelihood of the tree: -5281816.3412 (s.e. 54657.8836)
+        Unconstrained log-likelihood (without tree): -42610.5294
+        Number of free parameters (#branches + #model parameters): 3219
+        Akaike information criterion (AIC) score: 10570070.6824
+        Corrected Akaike information criterion (AICc) score: 10581479.7963
+        Bayesian information criterion (BIC) score: 10591073.2601
+        Total tree length (sum of branch lengths): 531.2065
+        Sum of internal branch lengths: 146.6991 (27.6162% of tree length)
+
+5.5 Update site profiles for entire dataset
+Data from /usr/bin/time and iqtree files for (05_sitefreqs_iteration2)
+	Command being timed: "iqtree -s alignment.faa -ft 04_PMSF_tree_iteration1.treefile -m GTRPMIX+FMIX{C60pi1:1.0000:0.0113,C60pi2:1.0000:0.0180,C60pi3:1.0000:0.0260,C60pi4:1.0000:0.0117,C60pi5:1.0000:0.0452,C60pi6:1.0000:0.0119,C60pi7:1.0000:0.0037,C60pi8:1.0000:0.0018,C60pi9:1.0000:0.0035,C60pi10:1.0000:0.0434,C60pi11:1.0000:0.0072,C60pi12:1.0000:0.0053,C60pi13:1.0000:0.0081,C60pi14:1.0000:0.0151,C60pi15:1.0000:0.0080,C60pi16:1.0000:0.0167,C60pi17:1.0000:0.0161,C60pi18:1.0000:0.0393,C60pi19:1.0000:0.0485,C60pi20:1.0000:0.0047,C60pi21:1.0000:0.0005,C60pi22:1.0000:0.0276,C60pi23:1.0000:0.0067,C60pi24:1.0000:0.0243,C60pi25:1.0000:0.0097,C60pi26:1.0000:0.0192,C60pi27:1.0000:0.0293,C60pi28:1.0000:0.0499,C60pi29:1.0000:0.0470,C60pi30:1.0000:0.0217,C60pi31:1.0000:0.0029,C60pi32:1.0000:0.0095,C60pi33:1.0000:0.0237,C60pi34:1.0000:0.0256,C60pi35:1.0000:0.0182,C60pi36:1.0000:0.0187,C60pi37:1.0000:0.0051,C60pi38:1.0000:0.0209,C60pi39:1.0000:0.0032,C60pi40:1.0000:0.0105,C60pi41:1.0000:0.0029,C60pi42:1.0000:0.0044,C60pi43:1.0000:0.0168,C60pi44:1.0000:0.0121,C60pi45:1.0000:0.0124,C60pi46:1.0000:0.0003,C60pi47:1.0000:0.0377,C60pi48:1.0000:0.0127,C60pi49:1.0000:0.0134,C60pi50:1.0000:0.0105,C60pi51:1.0000:0.0064,C60pi52:1.0000:0.0093,C60pi53:1.0000:0.0086,C60pi54:1.0000:0.0201,C60pi55:1.0000:0.0563,C60pi56:1.0000:0.0135,C60pi57:1.0000:0.0094,C60pi58:1.0000:0.0173,C60pi59:1.0000:0.0105,C60pi60:1.0000:0.0056}+G4 -mdef 02_GTR_c60_g_mwopt.GTRPMIX.nex -nt 60 -safe -pre 05_sitefreqs_iteration2 -n 0"
+	User time (seconds): 131499.19
+	System time (seconds): 5383.23
+	Percent of CPU this job got: 5583%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 40:51.58
+        IQ-TREE Total wall-clock time used: 120.899 sec (0h:2m:0s)
+        CPU efficiency: 93.05%
+
+5.6 Optimise full tree with GTR20 PMSF + UFBOOT
+Data from /usr/bin/time and iqtree files for (06_PMSF_tree_ufboot)
+	Command being timed: "iqtree -s alignment.faa -fs 05_sitefreqs_iteration2.sitefreq -t 05_sitefreqs_iteration2.treefile -m GTRPMIX+FMIX{C60pi1:1.0000:0.0113,C60pi2:1.0000:0.0180,C60pi3:1.0000:0.0260,C60pi4:1.0000:0.0117,C60pi5:1.0000:0.0452,C60pi6:1.0000:0.0119,C60pi7:1.0000:0.0037,C60pi8:1.0000:0.0018,C60pi9:1.0000:0.0035,C60pi10:1.0000:0.0434,C60pi11:1.0000:0.0072,C60pi12:1.0000:0.0053,C60pi13:1.0000:0.0081,C60pi14:1.0000:0.0151,C60pi15:1.0000:0.0080,C60pi16:1.0000:0.0167,C60pi17:1.0000:0.0161,C60pi18:1.0000:0.0393,C60pi19:1.0000:0.0485,C60pi20:1.0000:0.0047,C60pi21:1.0000:0.0005,C60pi22:1.0000:0.0276,C60pi23:1.0000:0.0067,C60pi24:1.0000:0.0243,C60pi25:1.0000:0.0097,C60pi26:1.0000:0.0192,C60pi27:1.0000:0.0293,C60pi28:1.0000:0.0499,C60pi29:1.0000:0.0470,C60pi30:1.0000:0.0217,C60pi31:1.0000:0.0029,C60pi32:1.0000:0.0095,C60pi33:1.0000:0.0237,C60pi34:1.0000:0.0256,C60pi35:1.0000:0.0182,C60pi36:1.0000:0.0187,C60pi37:1.0000:0.0051,C60pi38:1.0000:0.0209,C60pi39:1.0000:0.0032,C60pi40:1.0000:0.0105,C60pi41:1.0000:0.0029,C60pi42:1.0000:0.0044,C60pi43:1.0000:0.0168,C60pi44:1.0000:0.0121,C60pi45:1.0000:0.0124,C60pi46:1.0000:0.0003,C60pi47:1.0000:0.0377,C60pi48:1.0000:0.0127,C60pi49:1.0000:0.0134,C60pi50:1.0000:0.0105,C60pi51:1.0000:0.0064,C60pi52:1.0000:0.0093,C60pi53:1.0000:0.0086,C60pi54:1.0000:0.0201,C60pi55:1.0000:0.0563,C60pi56:1.0000:0.0135,C60pi57:1.0000:0.0094,C60pi58:1.0000:0.0173,C60pi59:1.0000:0.0105,C60pi60:1.0000:0.0056}+G4 -mdef 02_GTR_c60_g_mwopt.GTRPMIX.nex -nt 60 -safe -pre 06_PMSF_tree_ufboot -bb 1000"
+	User time (seconds): 2986752.18
+	System time (seconds): 2988.40
+	Percent of CPU this job got: 5921%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 14:01:30
+        IQ-TREE Total wall-clock time used: 50456.306 sec (14h:0m:56s)
+        CPU efficiency: 98.68%
+        Log-likelihood of the tree: -5267974.9218 (s.e. 54646.1994)
+        Unconstrained log-likelihood (without tree): -42610.5294
+        Number of free parameters (#branches + #model parameters): 3219
+        Akaike information criterion (AIC) score: 10542387.8436
+        Corrected Akaike information criterion (AICc) score: 10553796.9575
+        Bayesian information criterion (BIC) score: 10563390.4213
+        Total tree length (sum of branch lengths): 550.2242
+        Sum of internal branch lengths: 152.1150 (27.6460% of tree length)

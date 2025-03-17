@@ -95,3 +95,19 @@ Data from /usr/bin/time and iqtree files for (05_sitefreqs_iteration2)
         CPU efficiency: 95.25%
 
 5.6 Optimise full tree with GTR20 PMSF + UFBOOT
+Data from /usr/bin/time and iqtree files for (06_PMSF_tree_ufboot)
+	Command being timed: "iqtree -s alignment.faa -fs 05_sitefreqs_iteration2.sitefreq -t 05_sitefreqs_iteration2.treefile -m GTRPMIX+FMIX{C60pi1:1.0000:0.0109,C60pi2:1.0000:0.0170,C60pi3:1.0000:0.0208,C60pi4:1.0000:0.0111,C60pi5:1.0000:0.0328,C60pi6:1.0000:0.0136,C60pi7:1.0000:0.0035,C60pi8:1.0000:0.0014,C60pi9:1.0000:0.0038,C60pi10:1.0000:0.0534,C60pi11:1.0000:0.0101,C60pi12:1.0000:0.0101,C60pi13:1.0000:0.0098,C60pi14:1.0000:0.0121,C60pi15:1.0000:0.0080,C60pi16:1.0000:0.0166,C60pi17:1.0000:0.0148,C60pi18:1.0000:0.0401,C60pi19:1.0000:0.0391,C60pi20:1.0000:0.0056,C60pi21:1.0000:0.0017,C60pi22:1.0000:0.0345,C60pi23:1.0000:0.0075,C60pi24:1.0000:0.0301,C60pi25:1.0000:0.0072,C60pi26:1.0000:0.0176,C60pi27:1.0000:0.0285,C60pi28:1.0000:0.0410,C60pi29:1.0000:0.0388,C60pi30:1.0000:0.0184,C60pi31:1.0000:0.0061,C60pi32:1.0000:0.0104,C60pi33:1.0000:0.0228,C60pi34:1.0000:0.0329,C60pi35:1.0000:0.0165,C60pi36:1.0000:0.0123,C60pi37:1.0000:0.0075,C60pi38:1.0000:0.0208,C60pi39:1.0000:0.0043,C60pi40:1.0000:0.0106,C60pi41:1.0000:0.0060,C60pi42:1.0000:0.0039,C60pi43:1.0000:0.0177,C60pi44:1.0000:0.0140,C60pi45:1.0000:0.0091,C60pi46:1.0000:0.0002,C60pi47:1.0000:0.0429,C60pi48:1.0000:0.0164,C60pi49:1.0000:0.0104,C60pi50:1.0000:0.0089,C60pi51:1.0000:0.0083,C60pi52:1.0000:0.0138,C60pi53:1.0000:0.0087,C60pi54:1.0000:0.0183,C60pi55:1.0000:0.0600,C60pi56:1.0000:0.0115,C60pi57:1.0000:0.0150,C60pi58:1.0000:0.0165,C60pi59:1.0000:0.0103,C60pi60:1.0000:0.0041}+G4 -mdef 02_GTR_c60_g_mwopt.GTRPMIX.nex -nt 60 -safe -pre 06_PMSF_tree_ufboot -bb 1000"
+	User time (seconds): 10588346.90
+	System time (seconds): 10369.21
+	Percent of CPU this job got: 5839%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 50:25:00
+        IQ-TREE Total wall-clock time used: 181417.606 sec (50h:23m:37s)
+        CPU efficiency: 97.31%
+        **NOTE**: Consensus tree has higher likelihood than ML tree found! Please use consensus tree below.
+        Log-likelihood of the tree: -10377758.9759 (s.e. 108056.9354)
+        Unconstrained log-likelihood (without tree): -42806.7927
+        Number of free parameters (#branches + #model parameters): 6765
+        Akaike information criterion (AIC) score: 20769047.9518
+        Corrected Akaike information criterion (AICc) score: 112313027.9518
+        Bayesian information criterion (BIC) score: 20813183.9538
+        **************************** WARNING ****************************

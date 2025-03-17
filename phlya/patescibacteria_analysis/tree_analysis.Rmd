@@ -42,16 +42,133 @@ The datasets have increasing numbers of taxa for patescibacteria:
 * r214: 3374 taxa
 * r220: 4581 taxa
 
-## r202 tree comparison
+## tree comparisons
+
+For r202 I did two analyses with identical scripts, to see if the method is repeatable. 
 
 Let's load the FastTree and the IQ-TREE tree for each dataset
 
 ```{r}
 library(phangorn)
 setwd("/Users/roblanfear/Documents/github/bacterial-phylo/phlya/patescibacteria_analysis")
-r202_ft <- unroot(read.tree("r202/subtree.nwk"))
-r202_iq <- read.tree("r202/06_PMSF_tree_ufboot.treefile")
+r202a_ft <- unroot(read.tree("r202/subtree.nwk"))
+r202a_iq <- read.tree("r202/06_PMSF_tree_ufboot.treefile")
+r202b_ft <- unroot(read.tree("r202b/subtree.nwk"))
+r202b_iq <- read.tree("r202b/06_PMSF_tree_ufboot.treefile")
+r207_ft <- unroot(read.tree("r207/subtree.nwk"))
+r207_iq <- read.tree("r207/06_PMSF_tree_ufboot.treefile")
+r214_ft <- unroot(read.tree("r214/subtree.nwk"))
+r214_iq <- read.tree("r214/06_PMSF_tree_ufboot.treefile")
+r220_ft <- unroot(read.tree("r220/subtree.nwk"))
+r220_iq <- read.tree("r220/06_PMSF_tree_ufboot.treefile")
+
+# consensus trees - often better in ML terms
+r202a_ct <- read.tree("r202/06_PMSF_tree_ufboot.contree")
+r202b_ct <- read.tree("r202b/06_PMSF_tree_ufboot.contree")
+r207_ct <- read.tree("r207/06_PMSF_tree_ufboot.contree")
+r214_ct <- read.tree("r214/06_PMSF_tree_ufboot.contree")
+r220_ct <- read.tree("r220/06_PMSF_tree_ufboot.contree")
 ```
 
 A few simple comparisons
+
+```{r}
+library(tidyverse)
+library(ggdendro)
+library(viridis)
+library(phangorn)
+library(patchwork)
+
+# Load and prepare trees
+r202a_ft <- unroot(read.tree("r202/subtree.nwk"))
+r202a_iq <- read.tree("r202/06_PMSF_tree_ufboot.treefile")
+r202b_ft <- unroot(read.tree("r202b/subtree.nwk"))
+r202b_iq <- read.tree("r202b/06_PMSF_tree_ufboot.treefile")
+r207_ft <- unroot(read.tree("r207/subtree.nwk"))
+r207_iq <- read.tree("r207/06_PMSF_tree_ufboot.treefile")
+r214_ft <- unroot(read.tree("r214/subtree.nwk"))
+r214_iq <- read.tree("r214/06_PMSF_tree_ufboot.treefile")
+r220_ft <- unroot(read.tree("r220/subtree.nwk"))
+r220_iq <- read.tree("r220/06_PMSF_tree_ufboot.treefile")
+
+# consensus trees
+r202a_ct <- read.tree("r202/06_PMSF_tree_ufboot.contree")
+r202b_ct <- read.tree("r202b/06_PMSF_tree_ufboot.contree")
+r207_ct <- read.tree("r207/06_PMSF_tree_ufboot.contree")
+r214_ct <- read.tree("r214/06_PMSF_tree_ufboot.contree")
+r220_ct <- read.tree("r220/06_PMSF_tree_ufboot.contree")
+
+# Find common tips
+common_tips <- Reduce(intersect, list(
+  r202a_ft$tip.label, r202a_iq$tip.label, r202b_ft$tip.label, r202b_iq$tip.label,
+  r207_ft$tip.label, r207_iq$tip.label, r214_ft$tip.label, r214_iq$tip.label,
+  r220_ft$tip.label, r220_iq$tip.label, r202a_ct$tip.label, r202b_ct$tip.label,
+  r207_ct$tip.label, r214_ct$tip.label, r220_ct$tip.label
+))
+
+# Prune trees to common tips
+prune_tree <- function(tree) drop.tip(tree, setdiff(tree$tip.label, common_tips))
+all_trees <- list(r202a_ft, r202a_iq, r202b_ft, r202b_iq,
+                  r207_ft, r207_iq, r214_ft, r214_iq,
+                  r220_ft, r220_iq, r202a_ct, r202b_ct,
+                  r207_ct, r214_ct, r220_ct)
+pruned_trees <- lapply(all_trees, prune_tree)
+
+# Set tree names
+names(pruned_trees) <- c("r202a_ft", "r202a_iq", "r202b_ft", "r202b_iq",
+                         "r207_ft", "r207_iq", "r214_ft", "r214_iq",
+                         "r220_ft", "r220_iq", "r202a_ct", "r202b_ct",
+                         "r207_ct", "r214_ct", "r220_ct")
+
+class(pruned_trees) <- "multiPhylo"
+
+# Calculate normalized wRF distances
+wRFn <- path.dist(pruned_trees, check.labels = TRUE)
+
+# Function to convert lower triangle to full symmetric matrix
+full_matrix <- function(lower_tri_matrix) {
+  full <- as.matrix(lower_tri_matrix)
+  full[upper.tri(full)] <- t(full)[upper.tri(full)]
+  diag(full) <- 0
+  return(full)
+}
+
+# Convert to full matrix
+wRFn_full <- full_matrix(wRFn)
+
+# Hierarchical clustering
+hc <- hclust(as.dist(wRFn_full))
+dendro_order <- hc$labels[hc$order]
+
+# Prepare data for heatmap
+plot_data <- as.data.frame(wRFn_full) %>% 
+  rownames_to_column('Tree1') %>%
+  pivot_longer(-Tree1, names_to = "Tree2", values_to = "Distance") %>%
+  mutate(Tree1 = factor(Tree1, levels = dendro_order),
+         Tree2 = factor(Tree2, levels = dendro_order))
+
+# Dendrogram plot
+ dendro_data <- ggdendro::dendro_data(as.dendrogram(hc))
+ dendrogram_plot <- ggplot() +
+   geom_segment(data = dendro_data$segments,
+                aes(x = x, y = y, xend = xend, yend = yend)) +
+   scale_x_continuous(breaks = seq_along(dendro_data$labels$label),
+                      labels = dendro_data$labels$label, expand = c(0, 0.5)) +
+   coord_flip() +
+   theme_minimal() +
+   labs(y = "Height", x = NULL) +
+   theme(axis.title.x = element_blank(), axis.text.x = element_blank(), axis.ticks.x = element_blank())
+
+# Heatmap plot
+heatmap_plot <- ggplot(plot_data, aes(x = Tree1, y = Tree2, fill = Distance)) +
+  geom_tile() +
+  scale_fill_viridis(option = "viridis") +
+  labs(title = "Path Distances between trees", x = "", y = "", subtitle = "The trees from IQ-TREE are similar to each other, and to the r220 GTDB tree. The other GTDB trees are different...") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        plot.title = element_text(hjust = 0.5, face = "bold"))
+
+# Combine plots
+dendrogram_plot + heatmap_plot + plot_layout(widths = c(1, 4))
+```
 
