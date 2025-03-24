@@ -6,6 +6,7 @@ tree="../../../raw_data/bac120_r214.tree"
 log="log_r214.txt"
 subsample=128
 threads=60
+maxmem=500G # to limit huge memory steps to a fixed maximum memore
 
 echo "analysing phylum: $phylum" > $log
 echo "taxonomy file: $taxonomy" >> $log
@@ -189,7 +190,7 @@ iqtreelog "04_PMSF_tree_iteration1" "$log"
 # 5. update the site freqs with the new tree
 echo "" >> $log
 echo "5.5 Update site profiles for entire dataset" >> $log
-/usr/bin/time -v -o 05_sitefreqs_iteration2.txt iqtree -s alignment.faa -ft 04_PMSF_tree_iteration1.treefile -m "$gtrpmix_model" -mdef 02_GTR_c60_g_mwopt.GTRPMIX.nex -nt $threads -safe -pre 05_sitefreqs_iteration2 -n 0
+/usr/bin/time -v -o 05_sitefreqs_iteration2.txt iqtree -s alignment.faa -ft 04_PMSF_tree_iteration1.treefile -m "$gtrpmix_model" -mdef 02_GTR_c60_g_mwopt.GTRPMIX.nex -nt $threads -safe -pre 05_sitefreqs_iteration2 -n 0 -mem $maxmem
 iqtreelog "05_sitefreqs_iteration2" "$log"
 
 # 6. Full analysis with UFBOOT
